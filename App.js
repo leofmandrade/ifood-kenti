@@ -21,7 +21,7 @@ const Tab = createBottomTabNavigator();
 
 function MainTabs() {
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#fff', paddingTop: 20 }}>
       <Tab.Navigator>
         <Tab.Screen
           name="Início"
@@ -67,6 +67,7 @@ export default function App() {
     async function loadFonts() {
       await Font.loadAsync({
         'iFoodRCTextos-Regular': require('./assets/fonts/iFoodRCTextos-Regular.ttf'),
+        'iFoodRCTextos-Bold': require('./assets/fonts/iFoodRCTextos-Bold.ttf'),
       });
       setFontLoaded(true);
     }
