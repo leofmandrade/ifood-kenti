@@ -9,6 +9,7 @@ import SplashScreen from './screens/SplashScreen';
 import HomeScreen from './screens/HomeScreen';
 import RestaurantScreen from './screens/RestaurantScreen';
 import SearchScreen from './screens/SearchScreen';
+import GourmetScreen from './screens/GourmetScreen';
 import OrdersScreen from './screens/OrdersScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import HomeIcon from './assets/homeicon.png';
@@ -19,13 +20,23 @@ import ProfileIcon from './assets/profileicon.png';
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
+function HomeStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="Restaurants" component={RestaurantScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="Gourmet" component={GourmetScreen} options={{ headerShown: false }} />
+    </Stack.Navigator>
+  );
+}
+
 function MainTabs() {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#fff', paddingTop: 20 }}>
       <Tab.Navigator>
         <Tab.Screen
           name="Início"
-          component={HomeScreen}
+          component={HomeStack}
           options={{ 
             tabBarIcon: () => <Image source={HomeIcon} />,
             headerShown: false

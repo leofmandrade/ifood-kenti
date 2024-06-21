@@ -112,7 +112,11 @@ export default function HomeScreen({ navigation }) {
 
       {/* Categories */}
       <View style={styles.categoriesContainer1}>
-        <TouchableOpacity style={styles.categoryrestaurantes}>
+        <TouchableOpacity 
+          style={styles.categoryrestaurantes}
+          onPress={() => navigation.navigate('Restaurants')}
+          >
+          
           <Text style={styles.categoryTextRestaurantes}>Restaurantes</Text>
           <Image source={require('../assets/restaurantesimg.png')} style={styles.categoryImage} />
         </TouchableOpacity>
