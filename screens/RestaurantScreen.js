@@ -26,7 +26,6 @@ export default function RestaurantScreen({ navigation }) {
     { id: 4, name: 'Promoções', image: require('../assets/promocoes.png') },
     { id: 5, name: 'Saudavel', image: require('../assets/saudavel.png') },
     { id: 6, name: 'Lanches', image: require('../assets/lanches.png') },
-
   ];
 
   const pratosFamosos = [
@@ -36,10 +35,8 @@ export default function RestaurantScreen({ navigation }) {
     { id: 4, name: 'Massas', image: require('../assets/massas.png') },
     { id: 5, name: 'Frango', image: require('../assets/frango.png') },
     { id: 6, name: 'Peixes', image: require('../assets/frutosdomar.png') },
-    { id: 7, name: 'Estrogonofe', image: require('../assets/estrogonofe.png')}
-
+    { id: 7, name: 'Estrogonofe', image: require('../assets/estrogonofe.png') },
   ];
-
 
   const navigationItems = [
     { name: 'Restaurantes', image: require('../assets/restaurantesimg.png') },
@@ -50,12 +47,20 @@ export default function RestaurantScreen({ navigation }) {
     { name: 'Petshop', image: require('../assets/petshopimg.png') },
     { name: 'Shopping', image: require('../assets/shoppingimg.png') },
   ];
-  
+
+  const recentStores = [
+    { id: '1', name: 'Lanches Crek - Jardim Sul', image: require('../assets/creklanches.png') },
+    { id: '2', name: 'Super Food Bowls - Foods', image: require('../assets/superbowl.png') },
+    { id: '3', name: 'Vip Sushi - Vila Sônia', image: require('../assets/vipsushi.png') },
+    { id: '4', name: "Mcdonald's - Morumbi Town", image: require('../assets/mcdonalds.png') },
+    { id: '5', name: 'Japan One - Morumbi', image: require('../assets/japanone.png') },
+    { id: '6', name: 'Kfc - Frango Frito - Morumbi Town', image: require('../assets/kfc.png') },
+  ];
 
   const handleNavigationPress = (item) => {
     if (item.name === 'Restaurantes' || item.name === 'Gourmet') {
       setSelectedCategory(item.name);
-      
+
       if (item.name === 'Gourmet') {
         navigation.navigate('Gourmet');
       }
@@ -124,7 +129,6 @@ export default function RestaurantScreen({ navigation }) {
         </ScrollView>
       </View>
 
-      
       {/* Banner */}
       <View style={styles.bannerContainer}>
         <ScrollView
@@ -149,21 +153,20 @@ export default function RestaurantScreen({ navigation }) {
         </View>
       </View>
 
-
-
-
-
-      {/* Last Stores */}
+      {/* Recent Stores */}
       <View style={styles.sectionContainer}>
         <Text style={styles.sectionTitle}>Últimas Lojas</Text>
         <Text style={styles.viewMore}>Ver mais</Text>
       </View>
-      <Image source={require('../assets/restaurantesicones.png')} style={styles.itemImage2} />
-
-
+      <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.recentStoresContainer}>
+        {recentStores.map(store => (
+          <View key={store.id} style={styles.store}>
+            <Image source={store.image} style={styles.storeImage} />
+            <Text style={styles.storeText}  numberOfLines={2} ellipsizeMode="tail">{store.name}</Text>
+          </View>
+        ))}
+      </ScrollView>
     </ScrollView>
-
-    
   );
 }
 
@@ -286,6 +289,25 @@ const styles = StyleSheet.create({
   dishText: {
     marginTop: 5,
     fontSize: 12,
+  },
+  recentStoresContainer: {
+    paddingVertical: 10,
+  },
+  store: {
+    alignItems: 'center',
+    marginHorizontal: 10,
+  },
+  storeImage: {
+    width: 70,
+    height: 70,
+    borderRadius: 8,
+    marginBottom: 5,
+  },
+  storeText: {
+    fontSize: 14,
+    color: '#000',
+    textAlign: 'center',
+    width: 70,
   },
   itemImage2: {
     width: '100%',
