@@ -256,7 +256,7 @@ const styles = StyleSheet.create({
   },
   category: {
     alignItems: 'center',
-    marginHorizontal: 10,
+    marginHorizontal: 5,
   },
   categoryImage: {
     width: 80,
