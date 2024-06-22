@@ -1,10 +1,10 @@
-import React from 'react';
-import { View, ScrollView, Image, StyleSheet, TouchableOpacity, Text } from 'react-native';
+import React, { useState, useRef } from 'react';
+import { View, ScrollView, Image, StyleSheet, TouchableOpacity, Text, Dimensions } from 'react-native';
 
 const banners = [
   { id: '1', source: require('../assets/pecatudaoimg.png') },
-  { id: '2', source: require('../assets/restaurantesimg.png') },
-  { id: '3', source: require('../assets/restaurantesimg.png') },
+  { id: '2', source: require('../assets/almocobomebarato.png') },
+  { id: '3', source: require('../assets/pecamequi.png') },
 ];
 
 const freeDeliveryItems = [
@@ -28,83 +28,37 @@ const freeDeliveryItems = [
   },
   {
     id: '3',
-    image: require('../assets/pastelfrangocatupiry.png'),
-    title: 'Coxinha de Frango',
-    price: 'R$ 25,00',
-    oldPrice: 'R$ 50,00',
-    time: '20-30 min',
-    delivery: 'Grátis'
-  },
-  {
-    id: '4',
-    image: require('../assets/pastelfrangocatupiry.png'),
-    title: 'Pastel de Queijo',
-    price: 'R$ 20,00',
-    oldPrice: 'R$ 40,00',
-    time: '10-20 min',
-    delivery: 'Grátis'
-  },
-  {
-    id: '5',
-    image: require('../assets/pastelfrangocatupiry.png'),
-    title: 'Mini Pizzas',
-    price: 'R$ 35,00',
-    oldPrice: 'R$ 70,00',
-    time: '25-35 min',
-    delivery: 'Grátis'
-  },
-  {
-    id: '6',
-    image: require('../assets/pastelfrangocatupiry.png'),
-    title: 'Esfirra de Carne',
-    price: 'R$ 22,00',
-    oldPrice: 'R$ 44,00',
-    time: '15-25 min',
-    delivery: 'Grátis'
-  },
-  {
-    id: '7',
-    image: require('../assets/pastelfrangocatupiry.png'),
-    title: 'Quibe Frito',
-    price: 'R$ 28,00',
-    oldPrice: 'R$ 56,00',
-    time: '30-40 min',
-    delivery: 'Grátis'
-  },
-  {
-    id: '8',
-    image: require('../assets/pastelfrangocatupiry.png'),
-    title: 'Bolinha de Queijo',
-    price: 'R$ 26,00',
-    oldPrice: 'R$ 52,00',
-    time: '20-30 min',
-    delivery: 'Grátis'
-  },
-  {
-    id: '9',
-    image: require('../assets/pastelfrangocatupiry.png'),
-    title: 'Empada de Frango',
-    price: 'R$ 27,00',
+    image: require('../assets/acai.png'),
+    title: 'Açaí 700 ml + 6 Acompanhamentos',
+    price: 'R$ 29,00',
     oldPrice: 'R$ 54,00',
-    time: '25-35 min',
-    delivery: 'Grátis'
-  },
-  {
-    id: '10',
-    image: require('../assets/pastelfrangocatupiry.png'),
-    title: 'Croquete de Carne',
-    price: 'R$ 30,00',
-    oldPrice: 'R$ 60,00',
-    time: '15-25 min',
+    time: '19-29 min',
     delivery: 'Grátis'
   },
 ];
 
+const recentStores = [
+  { id: '1', name: 'Lanches Crek - Jardim Sul', image: require('../assets/creklanches.png') },
+  { id: '2', name: 'Super Food Bowls - Foods', image: require('../assets/superbowl.png') },
+  { id: '3', name: 'Vip Sushi - Vila Sônia', image: require('../assets/vipsushi.png') },
+  { id: '4', name: "Mcdonald's - Morumbi Town", image: require('../assets/mcdonalds.png') },
+  { id: '5', name: 'Japan One - Morumbi', image: require('../assets/japanone.png') },
+  { id: '6', name: 'Kfc - Frango Frito - Morumbi Town', image: require('../assets/kfc.png') },
+
+];
 
 export default function HomeScreen({ navigation }) {
+  const [activeSlide, setActiveSlide] = useState(0);
+  const scrollViewRef = useRef(null);
+  const windowWidth = Dimensions.get('window').width;
+
+  const handleScroll = (event) => {
+    const slide = Math.round(event.nativeEvent.contentOffset.x / windowWidth);
+    setActiveSlide(slide);
+  };
+
   return (
     <ScrollView style={styles.container}>
-
       {/* Address */}
       <View style={styles.addressContainer}>
         <Text style={styles.address}>R. Nicola Rollo, 151</Text>
@@ -115,8 +69,7 @@ export default function HomeScreen({ navigation }) {
         <TouchableOpacity 
           style={styles.categoryrestaurantes}
           onPress={() => navigation.navigate('Restaurants')}
-          >
-          
+        >
           <Text style={styles.categoryTextRestaurantes}>Restaurantes</Text>
           <Image source={require('../assets/restaurantesimg.png')} style={styles.categoryImage} />
         </TouchableOpacity>
@@ -156,12 +109,22 @@ export default function HomeScreen({ navigation }) {
           horizontal
           showsHorizontalScrollIndicator={false}
           pagingEnabled
-          contentContainerStyle={styles.bannerScrollContainer}
+          onScroll={handleScroll}
+          scrollEventThrottle={16}
+          ref={scrollViewRef}
         >
           {banners.map(banner => (
             <Image key={banner.id} source={banner.source} style={styles.bannerImage} />
           ))}
         </ScrollView>
+        <View style={styles.paginationContainer}>
+          {banners.map((_, index) => (
+            <View key={index} style={[
+              styles.paginationDot,
+              { opacity: index === activeSlide ? 1 : 0.3 }
+            ]} />
+          ))}
+        </View>
       </View>
 
       {/* Free Delivery Section */}
@@ -192,7 +155,15 @@ export default function HomeScreen({ navigation }) {
         <Text style={styles.sectionTitle}>Últimas lojas</Text>
         <Text style={styles.viewMore}>Ver mais</Text>
       </View>
-      <Image source={require('../assets/restaurantesicones.png')} style={styles.itemImage2} />
+      <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.recentStoresContainer}>
+        {recentStores.map(store => (
+          <View key={store.id} style={styles.store}>
+            <Image source={store.image} style={styles.storeImage} />
+            <Text style={styles.storeText} numberOfLines={2} ellipsizeMode="tail">{store.name}</Text>
+
+          </View>
+        ))}
+      </ScrollView>
     </ScrollView>
   );
 }
@@ -228,7 +199,7 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingTop: 3,
     borderRadius: 8,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   categoryrestaurantes: {
     backgroundColor: '#f8f4f4',
@@ -247,7 +218,6 @@ const styles = StyleSheet.create({
   },
   categoryImage: {
     width: 50,
-    backgroundColor: '#E4002B',
     height: 50,
     resizeMode: 'contain',
   },
@@ -263,15 +233,24 @@ const styles = StyleSheet.create({
   bannerContainer: {
     padding: 10,
   },
-  bannerScrollContainer: {
-    flexDirection: 'row',
-  },
   bannerImage: {
-    width: 300,
+    width: Dimensions.get('window').width - 30,
     height: 150,
     resizeMode: 'cover',
     borderRadius: 8,
     marginRight: 10,
+  },
+  paginationContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 10,
+  },
+  paginationDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: '#000',
+    marginHorizontal: 4,
   },
   sectionContainer: {
     flexDirection: 'row',
@@ -299,7 +278,6 @@ const styles = StyleSheet.create({
   },
   freeDeliveryItem: {
     flexDirection: 'row',
-    // backgroundColor: '#f8f4f4',
     borderRadius: 8,
     padding: 10,
     marginBottom: 10,
@@ -311,24 +289,18 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginRight: 10,
   },
-  itemImage2: {
-    width: '100%',
-    height: 70,
-    borderRadius: 8,
-    marginRight: 10,
-  },
   itemInfo: {
     flex: 1,
   },
   itemTitle: {
     fontSize: 16,
+    fontWeight: 'bold',
     color: '#000',
     marginBottom: 5,
   },
   itemPrice: {
     fontSize: 16,
-    color: '#000',
-    fontWeight: 'bold',
+    color: '#298559',
   },
   itemOldPrice: {
     fontSize: 14,
@@ -340,8 +312,24 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#000',
   },
-  itemsContainer: {
+  recentStoresContainer: {
     padding: 10,
-    flexDirection: 'row',
+  },
+  store: {
+    alignItems: 'center',
+    marginRight: 20,
+  },
+  storeImage: {
+    width: 70,
+    height: 70,
+    borderRadius: 8,
+    marginBottom: 5,
+  },
+  storeText: {
+    fontSize: 14,
+    color: '#000',
+    textAlign: 'center',
+    width: 70,
   },
 });
+

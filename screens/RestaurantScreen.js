@@ -19,20 +19,20 @@ export default function RestaurantScreen({ navigation }) {
   ];
 
   const navigationItems = [
-    'Restaurantes',
-    'Gourmet',
-    'Mercados',
-    'Farmácias',
-    'Bebidas',
-    'Petshop',
-    'Shopping',
+    { name: 'Restaurantes', image: require('../assets/restaurantesimg.png') },
+    { name: 'Gourmet', image: require('../assets/gourmetimg.png') },
+    { name: 'Mercados', image: require('../assets/mercadosimg.png') },
+    { name: 'Farmácias', image: require('../assets/farmaciasimg.png') },
+    { name: 'Bebidas', image: require('../assets/bebidasimg.png') },
+    { name: 'Petshop', image: require('../assets/petshopimg.png') },
+    { name: 'Shopping', image: require('../assets/shoppingimg.png') },
   ];
 
   const handleNavigationPress = (item) => {
-    if (item === 'Restaurantes' || item === 'Gourmet') {
-      setSelectedCategory(item);
+    if (item.name === 'Restaurantes' || item.name === 'Gourmet') {
+      setSelectedCategory(item.name);
       
-      if (item === 'Gourmet') {
+      if (item.name === 'Gourmet') {
         navigation.navigate('Gourmet');
       }
     }
@@ -56,16 +56,17 @@ export default function RestaurantScreen({ navigation }) {
             onPress={() => handleNavigationPress(item)}
             style={[
               styles.navItem,
-              selectedCategory === item && styles.selectedNavItem,
+              selectedCategory === item.name && styles.selectedNavItem,
             ]}
           >
+            <Image source={item.image} style={styles.navIcon} />
             <Text
               style={[
                 styles.navText,
-                selectedCategory === item && styles.selectedNavText,
+                selectedCategory === item.name && styles.selectedNavText,
               ]}
             >
-              {item}
+              {item.name}
             </Text>
           </TouchableOpacity>
         ))}
@@ -138,23 +139,30 @@ const styles = StyleSheet.create({
   navContainer: {
     flexDirection: 'row',
     paddingVertical: 10,
-    paddingHorizontal: 16,
+    paddingHorizontal: 10,
   },
   navItem: {
-    marginHorizontal: 10,
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    borderRadius: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginRight: 15,
+    padding: 10,
+    borderRadius: 20,
+    backgroundColor: '#f1f1f1',
   },
   selectedNavItem: {
-    backgroundColor: '#E4002B',
+    backgroundColor: '#ffbcb8',
+  },
+  navIcon: {
+    width: 20,
+    height: 20,
+    marginRight: 5,
   },
   navText: {
     fontSize: 14,
     color: '#333',
   },
   selectedNavText: {
-    color: '#fff',
+    color: '#9c0d03',
   },
   searchContainer: {
     padding: 10,
@@ -173,8 +181,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   categoryImage: {
-    width: 100,
-    height: 100,
+    width: 80,
+    height: 80,
     borderRadius: 10,
   },
   categoryText: {
@@ -196,8 +204,8 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   dishImage: {
-    width: 100,
-    height: 100,
+    width: 80,
+    height: 80,
     borderRadius: 10,
   },
   dishText: {
