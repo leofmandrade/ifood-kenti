@@ -1,14 +1,32 @@
-import React, { useState } from 'react';
-import { ScrollView, View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import React, { useState, useRef } from 'react';
+import { ScrollView, View, Text, TouchableOpacity, Image, StyleSheet, Dimensions } from 'react-native';
 
 export default function RestaurantScreen({ navigation }) {
   const [selectedCategory, setSelectedCategory] = useState('Restaurantes');
+  const [activeSlide, setActiveSlide] = useState(0);
+
+  const scrollViewRef = useRef(null);
+  const windowWidth = Dimensions.get('window').width;
+
+  const handleScroll = (event) => {
+    const slide = Math.round(event.nativeEvent.contentOffset.x / windowWidth);
+    setActiveSlide(slide);
+  };
+
+  const banners = [
+    { id: '1', source: require('../assets/pecatudaoimg.png') },
+    { id: '2', source: require('../assets/almocobomebarato.png') },
+    { id: '3', source: require('../assets/pecamequi.png') },
+  ];
 
   const categorias = [
     { id: 1, name: 'Marmita', image: require('../assets/marmita.png') },
-    { id: 2, name: 'Brasileira', image: require('../assets/feijoada.png') },
-    { id: 3, name: 'Árabe', image: require('../assets/arabe.png') },
-    { id: 4, name: 'Promoções', image: require('../assets/restaurantesicones.png') },
+    { id: 2, name: 'Árabe', image: require('../assets/arabe.png') },
+    { id: 3, name: 'Brasileira', image: require('../assets/feijoada.png') },
+    { id: 4, name: 'Promoções', image: require('../assets/promocoes.png') },
+    { id: 5, name: 'Saudavel', image: require('../assets/saudavel.png') },
+    { id: 6, name: 'Lanches', image: require('../assets/lanches.png') },
+
   ];
 
   const pratosFamosos = [
@@ -16,7 +34,12 @@ export default function RestaurantScreen({ navigation }) {
     { id: 2, name: 'Parmegiana', image: require('../assets/parmegiana.png') },
     { id: 3, name: 'Carne', image: require('../assets/carne.png') },
     { id: 4, name: 'Massas', image: require('../assets/massas.png') },
+    { id: 5, name: 'Frango', image: require('../assets/frango.png') },
+    { id: 6, name: 'Peixes', image: require('../assets/frutosdomar.png') },
+    { id: 7, name: 'Estrogonofe', image: require('../assets/estrogonofe.png')}
+
   ];
+
 
   const navigationItems = [
     { name: 'Restaurantes', image: require('../assets/restaurantesimg.png') },
@@ -27,6 +50,7 @@ export default function RestaurantScreen({ navigation }) {
     { name: 'Petshop', image: require('../assets/petshopimg.png') },
     { name: 'Shopping', image: require('../assets/shoppingimg.png') },
   ];
+  
 
   const handleNavigationPress = (item) => {
     if (item.name === 'Restaurantes' || item.name === 'Gourmet') {
@@ -100,10 +124,34 @@ export default function RestaurantScreen({ navigation }) {
         </ScrollView>
       </View>
 
+      
       {/* Banner */}
       <View style={styles.bannerContainer}>
-        <Image source={require('../assets/restaurantesicones.png')} style={styles.bannerImage} />
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          pagingEnabled
+          onScroll={handleScroll}
+          scrollEventThrottle={16}
+          ref={scrollViewRef}
+        >
+          {banners.map(banner => (
+            <Image key={banner.id} source={banner.source} style={styles.bannerImage} />
+          ))}
+        </ScrollView>
+        <View style={styles.paginationContainer}>
+          {banners.map((_, index) => (
+            <View key={index} style={[
+              styles.paginationDot,
+              { opacity: index === activeSlide ? 1 : 0.3 }
+            ]} />
+          ))}
+        </View>
       </View>
+
+
+
+
 
       {/* Last Stores */}
       <View style={styles.sectionContainer}>
@@ -111,7 +159,11 @@ export default function RestaurantScreen({ navigation }) {
         <Text style={styles.viewMore}>Ver mais</Text>
       </View>
       <Image source={require('../assets/restaurantesicones.png')} style={styles.itemImage2} />
+
+
     </ScrollView>
+
+    
   );
 }
 
@@ -129,6 +181,29 @@ const styles = StyleSheet.create({
   backButton: {
     fontSize: 18,
     color: '#E4002B',
+  },
+  bannerContainer: {
+    padding: 10,
+    marginTop: 30,
+  },
+  bannerImage: {
+    width: Dimensions.get('window').width - 30,
+    height: 150,
+    resizeMode: 'cover',
+    borderRadius: 8,
+    marginRight: 10,
+  },
+  paginationContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 10,
+  },
+  paginationDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: '#000',
+    marginHorizontal: 4,
   },
   address: {
     flex: 1,
@@ -211,15 +286,6 @@ const styles = StyleSheet.create({
   dishText: {
     marginTop: 5,
     fontSize: 12,
-  },
-  bannerContainer: {
-    marginVertical: 20,
-    paddingHorizontal: 16,
-  },
-  bannerImage: {
-    width: '100%',
-    height: 150,
-    borderRadius: 10,
   },
   itemImage2: {
     width: '100%',
