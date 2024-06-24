@@ -58,12 +58,8 @@ export default function RestaurantScreen({ navigation }) {
   ];
 
   const handleNavigationPress = (item) => {
-    if (item.name === 'Restaurantes' || item.name === 'Gourmet') {
-      setSelectedCategory(item.name);
-
-      if (item.name === 'Gourmet') {
-        navigation.navigate('Gourmet');
-      }
+    if (item.name === 'Gourmet') {
+      navigation.navigate('Gourmet');
     }
   };
 
