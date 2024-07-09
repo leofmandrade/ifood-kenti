@@ -30,7 +30,7 @@ export default function GourmetScreen({ navigation }) {
     { id: 1, name: 'Momentos especiais', image: require('../assets/momentosespeciais.png') },
     { id: 2, name: 'Toda hora', image: require('../assets/todahora.png') },
     { id: 3, name: 'Adoçar', image: require('../assets/adocar.png') },
-    { id: 4, name: 'Beliscar', image: require('../assets/beliscar.png') },
+    { id: 4, name: 'Kenti', image: require('../assets/kenti.jpg') },
   ];
 
   return (
@@ -53,7 +53,11 @@ export default function GourmetScreen({ navigation }) {
         <Text style={styles.sectionTitle}>Uma escolha pra:</Text>
         <View style={styles.categoriesContainer}>
           {categories.map(category => (
-            <TouchableOpacity key={category.id} style={styles.category}>
+            <TouchableOpacity
+              key={category.id}
+              style={styles.category}
+              onPress={() => category.name === 'Kenti' ? navigation.navigate('Kenti') : null}
+            >
               <Image source={category.image} style={styles.categoryImage} />
             </TouchableOpacity>
           ))}

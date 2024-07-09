@@ -12,6 +12,9 @@ import SearchScreen from './screens/SearchScreen';
 import GourmetScreen from './screens/GourmetScreen';
 import OrdersScreen from './screens/OrdersScreen';
 import ProfileScreen from './screens/ProfileScreen';
+import KentiScreen from './screens/KentiScreen';
+
+
 import HomeIcon from './assets/homeicon.png';
 import SearchIcon from './assets/searchicon.png';
 import OrdersIcon from './assets/ordersicon.png';
@@ -26,6 +29,7 @@ function HomeStack() {
       <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
       <Stack.Screen name="Restaurants" component={RestaurantScreen} options={{ headerShown: false }} />
       <Stack.Screen name="Gourmet" component={GourmetScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="Kenti" component={KentiScreen} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 }
