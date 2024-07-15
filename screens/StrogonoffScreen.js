@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { Animated, ScrollView, View, Text, Image, StyleSheet, TouchableOpacity, StatusBar } from 'react-native';
 
-export default function CameloScreen({ navigation }) {
+export default function StrogonoffScreen({ navigation }) {
     const scrollY = useRef(new Animated.Value(0)).current;
     const scrollViewRef = useRef(null);
     const sections = [
@@ -197,7 +197,7 @@ export default function CameloScreen({ navigation }) {
                 key={restaurant.id} 
                 onPress={() => {
                     if (restaurant.name === 'Strogonoff de camarão') {
-                        navigation.navigate('Strogonoff');
+                        navigation.navigate('StrogonoffScreen');
                     }
                 }}
                 style={{ marginBottom: 16 }}
