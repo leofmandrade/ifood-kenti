@@ -13,6 +13,7 @@ import GourmetScreen from './screens/GourmetScreen';
 import OrdersScreen from './screens/OrdersScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import KentiScreen from './screens/KentiScreen';
+import CameloScreen from './screens/CameloScreen';
 
 
 import HomeIcon from './assets/homeicon.png';
@@ -30,13 +31,14 @@ function HomeStack() {
       <Stack.Screen name="Restaurants" component={RestaurantScreen} options={{ headerShown: false }} />
       <Stack.Screen name="Gourmet" component={GourmetScreen} options={{ headerShown: false }} />
       <Stack.Screen name="Kenti" component={KentiScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="Camelo" component={CameloScreen} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 }
 
 function MainTabs() {
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#fff', paddingTop: 20 }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#fff'}}>
       <Tab.Navigator>
         <Tab.Screen
           name="Início"

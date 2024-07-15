@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { View, ScrollView, Image, StyleSheet, TouchableOpacity, Text, Dimensions } from 'react-native';
+import { View, ScrollView, Image, StyleSheet, TouchableOpacity, Text, Dimensions, StatusBar } from 'react-native';
 
 const banners = [
   { id: '1', source: require('../assets/pecatudaoimg.png') },
@@ -59,6 +59,9 @@ export default function HomeScreen({ navigation }) {
 
   return (
     <ScrollView style={styles.container}>
+      {/* StatusBar Configuration */}
+      <StatusBar barStyle="dark-content" backgroundColor="transparent" translucent={true} />
+      
       {/* Address */}
       <View style={styles.addressContainer}>
         <Text style={styles.address}>R. Nicola Rollo, 151</Text>

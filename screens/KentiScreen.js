@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Animated, ScrollView, View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { Animated, ScrollView, View, Text, Image, StyleSheet, TouchableOpacity, StatusBar } from 'react-native';
 
 export default function KentiScreen({ navigation }) {
   const scrollY = useRef(new Animated.Value(0)).current;
@@ -7,14 +7,29 @@ export default function KentiScreen({ navigation }) {
   const restaurants = [
     { id: '1', name: 'Camelo Moema', image: require('../assets/camelo_moema.png'), type: 'Italiana', deliveryTime: '45-55 min', rating: '4.9' },
     { id: '2', name: 'Farabbud', image: require('../assets/farabbud.png'), type: 'Árabe', deliveryTime: '50-60 min', rating: '4.7' },
-    { id: '3', name: 'Farabbud', image: require('../assets/farabbud.png'), type: 'Árabe', deliveryTime: '50-60 min', rating: '4.7' },
-    { id: '4', name: 'Farabbud', image: require('../assets/farabbud.png'), type: 'Árabe', deliveryTime: '50-60 min', rating: '4.7' },
+    { id: '3', name: 'Di Bari', image: require('../assets/dibari.png'), type: 'Pizzaria', deliveryTime: '30-40 min', rating: '4.8' },
+    { id: '4', name: 'Paul’s Boutique', image: require('../assets/paulsboutique.png'), type: 'Pizzaria', deliveryTime: '35-45 min', rating: '4.6' },
+    { id: '5', name: 'Margherita Pizzeria', image: require('../assets/margherita.png'), type: 'Pizzaria', deliveryTime: '25-35 min', rating: '4.9' },
+    { id: '6', name: 'Supra Mauro Maia', image: require('../assets/supra.png'), type: 'Italiana', deliveryTime: '40-50 min', rating: '4.7' },
+    { id: '7', name: 'Camarada Camarão', image: require('../assets/camaradacamarao.png'), type: 'Frutos do Mar', deliveryTime: '55-65 min', rating: '4.8' },
+    { id: '8', name: 'Pizza Hut Vila Mariana', image: require('../assets/pizzahut.png'), type: 'Pizzaria', deliveryTime: '30-40 min', rating: '4.5' },
+    { id: '9', name: 'Domino’s 9 Julho', image: require('../assets/dominos.png'), type: 'Pizzaria', deliveryTime: '20-30 min', rating: '4.6' },
   ];
+
+  const backButtonColor = scrollY.interpolate({
+    inputRange: [0, 150],
+    outputRange: ['#fff', '#000'],
+    extrapolate: 'clamp',
+  });
 
   return (
     <View style={styles.container}>
+      {/* StatusBar Configuration */}
+      <StatusBar barStyle="dark-content" backgroundColor="transparent" translucent={true} />
+
       {/* Static Banner */}
       <Animated.View style={[styles.bannerContainer, {
+        paddingTop: StatusBar.currentHeight, // Ensure banner covers the status bar
         transform: [{
           translateY: scrollY.interpolate({
             inputRange: [0, 150],
@@ -37,13 +52,6 @@ export default function KentiScreen({ navigation }) {
 
       {/* Fixed Header */}
       <Animated.View style={[styles.fixedHeader, {
-        transform: [{
-          translateY: scrollY.interpolate({
-            inputRange: [0, 150],
-            outputRange: [0, 0],
-            extrapolate: 'clamp',
-          })
-        }],
         backgroundColor: scrollY.interpolate({
           inputRange: [0, 150],
           outputRange: ['transparent', '#fff'],
@@ -51,13 +59,9 @@ export default function KentiScreen({ navigation }) {
         })
       }]}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-          <Animated.Text style={[styles.backButtonText, {
-            opacity: scrollY.interpolate({
-              inputRange: [0, 150],
-              outputRange: [1, 0],
-              extrapolate: 'clamp',
-            })
-          }]}>{'<'}</Animated.Text>
+          <Animated.Text style={[styles.backButtonText, { color: backButtonColor }]}>
+            {'<'}
+          </Animated.Text>
         </TouchableOpacity>
         <Animated.Text style={[styles.fixedTitle, {
           opacity: scrollY.interpolate({
@@ -68,8 +72,13 @@ export default function KentiScreen({ navigation }) {
         }]}>KENTI</Animated.Text>
       </Animated.View>
 
-      {/* Fixed Filters */}
+      {/* Fixed Filters and Title */}
       <Animated.View style={[styles.fixedFilters, {
+        backgroundColor: scrollY.interpolate({
+          inputRange: [0, 150],
+          outputRange: ['transparent', '#fff'],
+          extrapolate: 'clamp',
+        }),
         transform: [{
           translateY: scrollY.interpolate({
             inputRange: [0, 150],
@@ -78,6 +87,13 @@ export default function KentiScreen({ navigation }) {
           })
         }]
       }]}>
+        <Animated.Text style={[styles.title, {
+          opacity: scrollY.interpolate({
+            inputRange: [0, 150],
+            outputRange: [1, 0],
+            extrapolate: 'clamp',
+          })
+        }]}>Peça comida Kenti!</Animated.Text>
         <View style={styles.filtersContainer}>
           <TouchableOpacity style={styles.filterButton}>
             <Text style={styles.filterText}>Ordenar</Text>
@@ -97,7 +113,7 @@ export default function KentiScreen({ navigation }) {
         contentContainerStyle={styles.scrollViewContent}
         onScroll={Animated.event(
           [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-          { useNativeDriver: true }
+          { useNativeDriver: false }
         )}
         scrollEventThrottle={16}
       >
@@ -115,39 +131,35 @@ export default function KentiScreen({ navigation }) {
           backgroundColor: '#fff',
         }}>
           <View style={styles.restaurantsContainer}>
-            <Animated.Text style={[styles.title, {
-              transform: [{
-                translateY: scrollY.interpolate({
-                  inputRange: [0, 150],
-                  outputRange: [0, -150],
-                  extrapolate: 'clamp',
-                })
-              }],
-              opacity: scrollY.interpolate({
-                inputRange: [0, 150],
-                outputRange: [1, 0],
-                extrapolate: 'clamp',
-              })
-            }]}>Peça comida Kenti!</Animated.Text>
-            {restaurants.map(restaurant => (
-              <Animated.View key={restaurant.id} style={{
-                opacity: scrollY.interpolate({
-                  inputRange: [0, 300],
-                  outputRange: [1, 1],
-                  extrapolate: 'clamp',
-                }),
-              }}>
-                <View style={styles.restaurantCard}>
-                  <Image source={restaurant.image} style={styles.restaurantImage} />
-                  <View style={styles.restaurantInfo}>
-                    <View style={styles.nameRatingContainer}>
-                      <Text style={styles.restaurantName}>{restaurant.name}</Text>
-                      <Text style={styles.restaurantRating}>⭐ {restaurant.rating}</Text>
+            {restaurants.map((restaurant, index) => (
+              <TouchableOpacity 
+                key={restaurant.id} 
+                onPress={() => {
+                  if (restaurant.id === '1') {
+                    navigation.navigate('Camelo');
+                  }
+                }}
+                style={{ marginBottom: 16 }}
+              >
+                <Animated.View style={{
+                  opacity: scrollY.interpolate({
+                    inputRange: [0, 300],
+                    outputRange: [1, 1],
+                    extrapolate: 'clamp',
+                  }),
+                }}>
+                  <View style={styles.restaurantCard}>
+                    <Image source={restaurant.image} style={styles.restaurantImage} />
+                    <View style={styles.restaurantInfo}>
+                      <View style={styles.nameRatingContainer}>
+                        <Text style={styles.restaurantName}>{restaurant.name}</Text>
+                        <Text style={styles.restaurantRating}>⭐ {restaurant.rating}</Text>
+                      </View>
+                      <Text style={styles.restaurantDetails}>{restaurant.type} • {restaurant.deliveryTime}</Text>
                     </View>
-                    <Text style={styles.restaurantDetails}>{restaurant.type} • {restaurant.deliveryTime}</Text>
                   </View>
-                </View>
-              </Animated.View>
+                </Animated.View>
+              </TouchableOpacity>
             ))}
           </View>
         </Animated.View>
@@ -155,7 +167,6 @@ export default function KentiScreen({ navigation }) {
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -167,22 +178,23 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     zIndex: 1,
+    paddingTop: StatusBar.currentHeight,
   },
   bannerImage: {
     width: '100%',
-    height: 150,
+    height: 190 + StatusBar.currentHeight,
     resizeMode: 'cover',
   },
   scrollView: {
     marginTop: 0,
   },
   scrollViewContent: {
-    paddingTop: 250,  // Ensure content starts below the banner and fixed filters
+    paddingTop: 300 + StatusBar.currentHeight,
     paddingHorizontal: 16,
   },
   fixedHeader: {
     position: 'absolute',
-    top: 0,
+    top: StatusBar.currentHeight,
     left: 0,
     right: 0,
     height: 50,
@@ -193,21 +205,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   backButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-    alignItems: 'center',
     position: 'absolute',
-    top: 5,
     left: 10,
-    zIndex: 3,
-    borderWidth: 1,
-    borderColor: '#ddd', // Optional: to give a slight border
   },
   backButtonText: {
-    fontSize: 18,
+    fontSize: 24,
     fontWeight: 'bold',
   },
   fixedTitle: {
@@ -216,15 +218,19 @@ const styles = StyleSheet.create({
   },
   fixedFilters: {
     position: 'absolute',
-    top: 50, // Adjust according to the height of fixedHeader
+    top: 40 + StatusBar.currentHeight,
     left: 0,
     right: 0,
     zIndex: 2,
-    backgroundColor: '#fff',
     paddingHorizontal: 16,
     paddingVertical: 10,
     borderBottomWidth: 1,
     borderBottomColor: '#ddd',
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
   },
   filtersContainer: {
     flexDirection: 'row',
@@ -242,13 +248,9 @@ const styles = StyleSheet.create({
   restaurantsContainer: {
     marginTop: 10,
   },
-  title: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
   restaurantCard: {
-    marginBottom: 16,
+    borderColor: '#e6e6e6',
+    borderWidth: 1,
     backgroundColor: '#fff',
     borderRadius: 8,
     shadowColor: '#000',
@@ -256,13 +258,16 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 4,
     elevation: 3,
-    overflow: 'hidden',  // Ensure borderRadius works for children
+    overflow: 'hidden',
   },
   restaurantImage: {
-    width: '100%',
-    height: 150,
-    resizeMode: 'cover',
+    width: '40%', // Adjust the percentage to make the image smaller
+    height: undefined,  // Allows the height to be adjusted automatically
+    aspectRatio: 1,  // Adjust this value to maintain the desired aspect ratio
+    alignSelf: 'center',  // Center the image horizontally
+    resizeMode: 'contain',  // Ensure the image is not cut
   },
+
   restaurantInfo: {
     padding: 10,
   },
@@ -277,12 +282,12 @@ const styles = StyleSheet.create({
   },
   restaurantRating: {
     fontSize: 14,
-    color: '#FFD700',
+    color: '#bd8a00',
     marginLeft: 8,
   },
   restaurantDetails: {
     fontSize: 12,
     color: '#555',
-    marginTop: 4,  // Adjust spacing between rating and details
+    marginTop: 4,
   },
 });
