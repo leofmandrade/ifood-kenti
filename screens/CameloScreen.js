@@ -1,9 +1,12 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Animated, ScrollView, View, Text, Image, StyleSheet, TouchableOpacity, StatusBar } from 'react-native';
+import StrogonoffModal from './StrogonoffModal';
+
 
 export default function CameloScreen({ navigation }) {
     const scrollY = useRef(new Animated.Value(0)).current;
     const scrollViewRef = useRef(null);
+    const [modalVisible, setModalVisible] = useState(false);
     const sections = [
         { id: '1', name: 'Os mais pedidos' },
         { id: '2', name: 'Strogonoffs' },
@@ -196,7 +199,7 @@ export default function CameloScreen({ navigation }) {
                 key={restaurant.id} 
                 onPress={() => {
                     if (restaurant.name === 'Strogonoff de camarão') {
-                        navigation.navigate('Strogonoff');
+                        setModalVisible(true);
                     }
                 }}
                 style={{ marginBottom: 16 }}
@@ -353,6 +356,7 @@ export default function CameloScreen({ navigation }) {
 
             </Animated.View>
         </Animated.ScrollView>
+        {modalVisible && <StrogonoffModal visible={modalVisible} onClose={() => setModalVisible(false)} />}
         </View>
     );
 }

@@ -20,7 +20,7 @@ import HomeIcon from './assets/homeicon.png';
 import SearchIcon from './assets/searchicon.png';
 import OrdersIcon from './assets/ordersicon.png';
 import ProfileIcon from './assets/profileicon.png';
-import StrogonoffScreen from './screens/StrogonoffScreen';
+// import StrogonoffScreen from './screens/StrogonoffScreen';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -33,7 +33,7 @@ function HomeStack() {
       <Stack.Screen name="Gourmet" component={GourmetScreen} options={{ headerShown: false }} />
       <Stack.Screen name="Kenti" component={KentiScreen} options={{ headerShown: false }} />
       <Stack.Screen name="Camelo" component={CameloScreen} options={{ headerShown: false }} />
-      <Stack.Screen name="Strogonoff" component={StrogonoffScreen} options={{ headerShown: false }} />
+      {/* <Stack.Screen name="Strogonoff" component={StrogonoffScreen} options={{ headerShown: false }} /> */}
     </Stack.Navigator>
   );
 }
