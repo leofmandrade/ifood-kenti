@@ -1,5 +1,7 @@
 import React, { useRef } from 'react';
-import { Animated, ScrollView, View, Text, Image, StyleSheet, TouchableOpacity, StatusBar } from 'react-native';
+import { Animated, ScrollView, View, Text, Image, StyleSheet, TouchableOpacity, StatusBar, Dimensions } from 'react-native';
+
+const { width, height } = Dimensions.get('window');
 
 export default function KentiScreen({ navigation }) {
   const scrollY = useRef(new Animated.Value(0)).current;
@@ -24,12 +26,16 @@ export default function KentiScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      {/* StatusBar Configuration */}
       <StatusBar barStyle="dark-content" backgroundColor="transparent" translucent={true} />
 
-      {/* Static Banner */}
       <Animated.View style={[styles.bannerContainer, {
-        paddingTop: StatusBar.currentHeight, // Ensure banner covers the status bar
+        paddingTop: StatusBar.currentHeight,
+        backgroundColor: scrollY.interpolate({
+          inputRange: [0, 150],
+          outputRange: ['#000', '#fff'],
+          extrapolate: 'clamp',
+        }),
+
         transform: [{
           translateY: scrollY.interpolate({
             inputRange: [0, 150],
@@ -50,7 +56,6 @@ export default function KentiScreen({ navigation }) {
         />
       </Animated.View>
 
-      {/* Fixed Header */}
       <Animated.View style={[styles.fixedHeader, {
         backgroundColor: scrollY.interpolate({
           inputRange: [0, 150],
@@ -64,6 +69,11 @@ export default function KentiScreen({ navigation }) {
           </Animated.Text>
         </TouchableOpacity>
         <Animated.Text style={[styles.fixedTitle, {
+          backgroundColor: scrollY.interpolate({
+            inputRange: [0, 150],
+            outputRange: ['#000', '#fff'],
+            extrapolate: 'clamp',
+          }),
           opacity: scrollY.interpolate({
             inputRange: [0, 150],
             outputRange: [0, 1],
@@ -72,7 +82,6 @@ export default function KentiScreen({ navigation }) {
         }]}>KENTI</Animated.Text>
       </Animated.View>
 
-      {/* Fixed Filters and Title */}
       <Animated.View style={[styles.fixedFilters, {
         backgroundColor: scrollY.interpolate({
           inputRange: [0, 150],
@@ -107,7 +116,6 @@ export default function KentiScreen({ navigation }) {
         </View>
       </Animated.View>
 
-      {/* Scrollable Restaurants List */}
       <Animated.ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.scrollViewContent}
@@ -167,10 +175,13 @@ export default function KentiScreen({ navigation }) {
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    paddingTop: StatusBar.currentHeight,
+
   },
   bannerContainer: {
     position: 'absolute',
@@ -178,23 +189,22 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     zIndex: 1,
-    paddingTop: StatusBar.currentHeight,
   },
   bannerImage: {
     width: '100%',
-    height: 190 + StatusBar.currentHeight,
+    height: height * 0.20,
     resizeMode: 'cover',
   },
   scrollView: {
     marginTop: 0,
   },
   scrollViewContent: {
-    paddingTop: 300 + StatusBar.currentHeight,
+    paddingTop: height * 0.35 + StatusBar.currentHeight,
     paddingHorizontal: 16,
   },
   fixedHeader: {
     position: 'absolute',
-    top: StatusBar.currentHeight,
+    top: StatusBar.currentHeight + 20,
     left: 0,
     right: 0,
     height: 50,
@@ -202,7 +212,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'transparent',
+    backgroundColor: '#white',
   },
   backButton: {
     position: 'absolute',
@@ -218,7 +228,7 @@ const styles = StyleSheet.create({
   },
   fixedFilters: {
     position: 'absolute',
-    top: 40 + StatusBar.currentHeight,
+    top: 10 + StatusBar.currentHeight,
     left: 0,
     right: 0,
     zIndex: 2,
@@ -261,13 +271,12 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   restaurantImage: {
-    width: '40%', // Adjust the percentage to make the image smaller
-    height: undefined,  // Allows the height to be adjusted automatically
-    aspectRatio: 1,  // Adjust this value to maintain the desired aspect ratio
-    alignSelf: 'center',  // Center the image horizontally
-    resizeMode: 'contain',  // Ensure the image is not cut
+    width: '30%', // Ajustar para ocupar a largura total do card
+    height: undefined,
+    aspectRatio: 1, // Mantém a proporção da imagem
+    alignSelf: 'center',
+    resizeMode: 'contain',
   },
-
   restaurantInfo: {
     padding: 10,
   },

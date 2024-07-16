@@ -58,116 +58,118 @@ export default function HomeScreen({ navigation }) {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       {/* StatusBar Configuration */}
       <StatusBar barStyle="dark-content" backgroundColor="transparent" translucent={true} />
       
-      {/* Address */}
-      <View style={styles.addressContainer}>
+      {/* Fixed Address */}
+      <View style={styles.fixedAddressContainer}>
         <Text style={styles.address}>R. Nicola Rollo, 151</Text>
       </View>
 
-      {/* Categories */}
-      <View style={styles.categoriesContainer1}>
-        <TouchableOpacity 
-          style={styles.categoryrestaurantes}
-          onPress={() => navigation.navigate('Restaurants')}
-        >
-          <Text style={styles.categoryTextRestaurantes}>Restaurantes</Text>
-          <Image source={require('../assets/restaurantesimg.png')} style={styles.categoryImage} />
-        </TouchableOpacity>
-        <View style={styles.categoryresto}>
+      {/* Scrollable Content */}
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        {/* Categories */}
+        <View style={styles.categoriesContainer1}>
+          <TouchableOpacity 
+            style={styles.categoryrestaurantes}
+            onPress={() => navigation.navigate('Restaurants')}
+          >
+            <Text style={styles.categoryTextRestaurantes}>Restaurantes</Text>
+            <Image source={require('../assets/restaurantesimg.png')} style={styles.categoryImage} />
+          </TouchableOpacity>
+          <View style={styles.categoryresto}>
+            <TouchableOpacity style={styles.category}>
+              <Image source={require('../assets/mercadosimg.png')} style={styles.categoryImage} />
+              <Text style={styles.categoryText}>Mercados</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.category}>
+              <Image source={require('../assets/farmaciasimg.png')} style={styles.categoryImage} />
+              <Text style={styles.categoryText}>Farmácias</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View style={styles.categoriesContainer2}>
           <TouchableOpacity style={styles.category}>
-            <Image source={require('../assets/mercadosimg.png')} style={styles.categoryImage} />
-            <Text style={styles.categoryText}>Mercados</Text>
+            <Image source={require('../assets/bebidasimg.png')} style={styles.categoryImage} />
+            <Text style={styles.categoryText}>Bebidas</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.category}>
-            <Image source={require('../assets/farmaciasimg.png')} style={styles.categoryImage} />
-            <Text style={styles.categoryText}>Farmácias</Text>
+            <Image source={require('../assets/petshopimg.png')} style={styles.categoryImage} />
+            <Text style={styles.categoryText}>Pet Shop</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.category}>
+            <Image source={require('../assets/shoppingimg.png')} style={styles.categoryImage} />
+            <Text style={styles.categoryText}>Shopping</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.category}>
+            <Image source={require('../assets/gourmetimg.png')} style={styles.categoryImage} />
+            <Text style={styles.categoryText}>Gourmet</Text>
           </TouchableOpacity>
         </View>
-      </View>
-      <View style={styles.categoriesContainer2}>
-        <TouchableOpacity style={styles.category}>
-          <Image source={require('../assets/bebidasimg.png')} style={styles.categoryImage} />
-          <Text style={styles.categoryText}>Bebidas</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.category}>
-          <Image source={require('../assets/petshopimg.png')} style={styles.categoryImage} />
-          <Text style={styles.categoryText}>Pet Shop</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.category}>
-          <Image source={require('../assets/shoppingimg.png')} style={styles.categoryImage} />
-          <Text style={styles.categoryText}>Shopping</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.category}>
-          <Image source={require('../assets/gourmetimg.png')} style={styles.categoryImage} />
-          <Text style={styles.categoryText}>Gourmet</Text>
-        </TouchableOpacity>
-      </View>
 
-      {/* Banner */}
-      <View style={styles.bannerContainer}>
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          pagingEnabled
-          onScroll={handleScroll}
-          scrollEventThrottle={16}
-          ref={scrollViewRef}
-        >
-          {banners.map(banner => (
-            <Image key={banner.id} source={banner.source} style={styles.bannerImage} />
-          ))}
-        </ScrollView>
-        <View style={styles.paginationContainer}>
-          {banners.map((_, index) => (
-            <View key={index} style={[
-              styles.paginationDot,
-              { opacity: index === activeSlide ? 1 : 0.3 }
-            ]} />
-          ))}
-        </View>
-      </View>
-
-      {/* Free Delivery Section */}
-      <View style={styles.sectionContainer}>
-        <Text style={styles.sectionTitle}>Tudo com entrega grátis</Text>
-        <Text style={styles.viewMore}>Ver mais</Text>
-      </View>
-      <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.freeDeliveryContainer}>
-        {Array(Math.ceil(freeDeliveryItems.length / 2)).fill().map((_, i) => (
-          <View key={i} style={styles.freeDeliveryColumn}>
-            {freeDeliveryItems.slice(i * 2, i * 2 + 2).map(item => (
-              <View key={item.id} style={styles.freeDeliveryItem}>
-                <Image source={item.image} style={styles.itemImage} />
-                <View style={styles.itemInfo}>
-                  <Text style={styles.itemTitle}>{item.title}</Text>
-                  <Text style={styles.itemPrice}>{item.price}</Text>
-                  <Text style={styles.itemOldPrice}>{item.oldPrice}</Text>
-                  <Text style={styles.itemTime}>{item.time} • {item.delivery}</Text>
-                </View>
-              </View>
+        {/* Banner */}
+        <View style={styles.bannerContainer}>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            pagingEnabled
+            onScroll={handleScroll}
+            scrollEventThrottle={16}
+            ref={scrollViewRef}
+          >
+            {banners.map(banner => (
+              <Image key={banner.id} source={banner.source} style={styles.bannerImage} />
+            ))}
+          </ScrollView>
+          <View style={styles.paginationContainer}>
+            {banners.map((_, index) => (
+              <View key={index} style={[
+                styles.paginationDot,
+                { opacity: index === activeSlide ? 1 : 0.3 }
+              ]} />
             ))}
           </View>
-        ))}
-      </ScrollView>
+        </View>
 
-      {/* Recent Stores Section */}
-      <View style={styles.sectionContainer}>
-        <Text style={styles.sectionTitle}>Últimas lojas</Text>
-        <Text style={styles.viewMore}>Ver mais</Text>
-      </View>
-      <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.recentStoresContainer}>
-        {recentStores.map(store => (
-          <View key={store.id} style={styles.store}>
-            <Image source={store.image} style={styles.storeImage} />
-            <Text style={styles.storeText} numberOfLines={2} ellipsizeMode="tail">{store.name}</Text>
+        {/* Free Delivery Section */}
+        <View style={styles.sectionContainer}>
+          <Text style={styles.sectionTitle}>Tudo com entrega grátis</Text>
+          <Text style={styles.viewMore}>Ver mais</Text>
+        </View>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.freeDeliveryContainer}>
+          {Array(Math.ceil(freeDeliveryItems.length / 2)).fill().map((_, i) => (
+            <View key={i} style={styles.freeDeliveryColumn}>
+              {freeDeliveryItems.slice(i * 2, i * 2 + 2).map(item => (
+                <View key={item.id} style={styles.freeDeliveryItem}>
+                  <Image source={item.image} style={styles.itemImage} />
+                  <View style={styles.itemInfo}>
+                    <Text style={styles.itemTitle}>{item.title}</Text>
+                    <Text style={styles.itemPrice}>{item.price}</Text>
+                    <Text style={styles.itemOldPrice}>{item.oldPrice}</Text>
+                    <Text style={styles.itemTime}>{item.time} • {item.delivery}</Text>
+                  </View>
+                </View>
+              ))}
+            </View>
+          ))}
+        </ScrollView>
 
-          </View>
-        ))}
+        {/* Recent Stores Section */}
+        <View style={styles.sectionContainer}>
+          <Text style={styles.sectionTitle}>Últimas lojas</Text>
+          <Text style={styles.viewMore}>Ver mais</Text>
+        </View>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.recentStoresContainer}>
+          {recentStores.map(store => (
+            <View key={store.id} style={styles.store}>
+              <Image source={store.image} style={styles.storeImage} />
+              <Text style={styles.storeText} numberOfLines={2} ellipsizeMode="tail">{store.name}</Text>
+            </View>
+          ))}
+        </ScrollView>
       </ScrollView>
-    </ScrollView>
+    </View>
   );
 }
 
@@ -175,15 +177,25 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    paddingTop: 20,
   },
-  addressContainer: {
+  fixedAddressContainer: {
+    position: 'absolute',
+    top: 20,
+    left: 0,
+    right: 0,
     alignItems: 'center',
-    padding: 10,
+    padding: 30,
+    backgroundColor: '#fff',
+    zIndex: 1,
   },
   address: {
     fontSize: 18,
     color: '#000',
     fontWeight: 'bold',
+  },
+  scrollContainer: {
+    paddingTop: 80, // Adjust according to the height of the fixed address
   },
   categoriesContainer1: {
     flexDirection: 'row',
@@ -335,4 +347,3 @@ const styles = StyleSheet.create({
     width: 70,
   },
 });
-

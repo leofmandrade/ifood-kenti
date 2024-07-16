@@ -111,12 +111,14 @@ export default function GourmetScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop: 20,
     backgroundColor: '#fff',
   },
   headerContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 16,
+    paddingTop: 30,
+    paddingHorizontal: 16,
     backgroundColor: '#fff',
   },
   backButton: {

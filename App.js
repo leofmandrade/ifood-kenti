@@ -40,42 +40,40 @@ function HomeStack() {
 
 function MainTabs() {
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#fff'}}>
-      <Tab.Navigator>
-        <Tab.Screen
-          name="Início"
-          component={HomeStack}
-          options={{ 
-            tabBarIcon: () => <Image source={HomeIcon} />,
-            headerShown: false
-          }}
-        />
-        <Tab.Screen
-          name="Busca"
-          component={SearchScreen}
-          options={{ 
-            tabBarIcon: () => <Image source={SearchIcon} />,
-            headerShown: false
-          }}
-        />
-        <Tab.Screen
-          name="Pedidos"
-          component={OrdersScreen}
-          options={{ 
-            tabBarIcon: () => <Image source={OrdersIcon} />,
-            headerShown: false
-          }}
-        />
-        <Tab.Screen
-          name="Perfil"
-          component={ProfileScreen}
-          options={{ 
-            tabBarIcon: () => <Image source={ProfileIcon} />,
-            headerShown: false
-          }}
-        />
-      </Tab.Navigator>
-    </SafeAreaView>
+    <Tab.Navigator>
+      <Tab.Screen
+        name="Início"
+        component={HomeStack}
+        options={{ 
+          tabBarIcon: () => <Image source={HomeIcon} />,
+          headerShown: false
+        }}
+      />
+      <Tab.Screen
+        name="Busca"
+        component={SearchScreen}
+        options={{ 
+          tabBarIcon: () => <Image source={SearchIcon} />,
+          headerShown: false
+        }}
+      />
+      <Tab.Screen
+        name="Pedidos"
+        component={OrdersScreen}
+        options={{ 
+          tabBarIcon: () => <Image source={OrdersIcon} />,
+          headerShown: false
+        }}
+      />
+      <Tab.Screen
+        name="Perfil"
+        component={ProfileScreen}
+        options={{ 
+          tabBarIcon: () => <Image source={ProfileIcon} />,
+          headerShown: false
+        }}
+      />
+    </Tab.Navigator>
   );
 }
 

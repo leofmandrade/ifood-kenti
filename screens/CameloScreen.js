@@ -77,7 +77,6 @@ export default function CameloScreen({ navigation }) {
         <StatusBar barStyle="dark-content" backgroundColor="transparent" translucent={true} />
 
         <Animated.View style={[styles.bannerContainer, {
-            paddingTop: StatusBar.currentHeight,
             transform: [{
             translateY: scrollY.interpolate({
                 inputRange: [0, 150],
@@ -229,7 +228,7 @@ export default function CameloScreen({ navigation }) {
             <Text style={styles.sectionTitle}>Porções</Text>
             <View style={styles.pratosContainer}>
                 {porcoes.map((restaurant, index) => (
-                <TouchableOpacity 
+                <View 
                     key={restaurant.id} 
                     style={{ marginBottom: 16 }}
                 >
@@ -253,14 +252,14 @@ export default function CameloScreen({ navigation }) {
                         <Image source={restaurant.image} style={styles.restaurantImageVertical} />
                     </View>
                     </Animated.View>
-                </TouchableOpacity>
+                </View>
                 ))}
             </View>
 
             <Text style={styles.sectionTitle}>Filés</Text>
             <View style={styles.pratosContainer}>
                 {files.map((restaurant, index) => (
-                <TouchableOpacity 
+                <View 
                     key={restaurant.id} 
                     style={{ marginBottom: 16 }}
                 >
@@ -284,14 +283,14 @@ export default function CameloScreen({ navigation }) {
                         <Image source={restaurant.image} style={styles.restaurantImageVertical} />
                     </View>
                     </Animated.View>
-                </TouchableOpacity>
+                </View>
                 ))}
             </View>
 
             <Text style={styles.sectionTitle}>Pizzas</Text>
             <View style={styles.pratosContainer}>
                 {pizzassalgadasgrande.map((restaurant, index) => (
-                <TouchableOpacity 
+                <View 
                     key={restaurant.id} 
                     style={{ marginBottom: 16 }}
                 >
@@ -315,13 +314,13 @@ export default function CameloScreen({ navigation }) {
                         <Image source={restaurant.image} style={styles.restaurantImageVertical} />
                     </View>
                     </Animated.View>
-                </TouchableOpacity>
+                </View>
                 ))}
             </View>
             <Text style={styles.sectionTitle}>Acompanhametos</Text>
             <View style={styles.pratosContainer}>
                 {acompanhamentos.map((restaurant, index) => (
-                <TouchableOpacity 
+                <View 
                     key={restaurant.id} 
                     style={{ marginBottom: 16 }}
                 >
@@ -345,7 +344,7 @@ export default function CameloScreen({ navigation }) {
                         <Image source={restaurant.image} style={styles.restaurantImageVertical} />
                     </View>
                     </Animated.View>
-                </TouchableOpacity>
+                </View>
                 ))}
             </View>
 
@@ -362,6 +361,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    paddingTop: StatusBar.currentHeight,
   },
   bannerContainer: {
     position: 'absolute',
@@ -369,7 +369,6 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     zIndex: 1,
-    paddingTop: StatusBar.currentHeight,
   },
   bannerImage: {
     width: '100%',

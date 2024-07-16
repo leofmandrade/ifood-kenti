@@ -64,7 +64,7 @@ export default function RestaurantScreen({ navigation }) {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       {/* Header */}
       <View style={styles.headerContainer}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -73,96 +73,99 @@ export default function RestaurantScreen({ navigation }) {
         <Text style={styles.address}>R. Nicola Rollo, 151</Text>
       </View>
 
-      {/* Navigation Items */}
-      <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.navContainer}>
-        {navigationItems.map((item, index) => (
-          <TouchableOpacity
-            key={index}
-            onPress={() => handleNavigationPress(item)}
-            style={[
-              styles.navItem,
-              selectedCategory === item.name && styles.selectedNavItem,
-            ]}
-          >
-            <Image source={item.image} style={styles.navIcon} />
-            <Text
+      {/* Content */}
+      <ScrollView style={styles.content}>
+        {/* Navigation Items */}
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.navContainer}>
+          {navigationItems.map((item, index) => (
+            <TouchableOpacity
+              key={index}
+              onPress={() => handleNavigationPress(item)}
               style={[
-                styles.navText,
-                selectedCategory === item.name && styles.selectedNavText,
+                styles.navItem,
+                selectedCategory === item.name && styles.selectedNavItem,
               ]}
             >
-              {item.name}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
+              <Image source={item.image} style={styles.navIcon} />
+              <Text
+                style={[
+                  styles.navText,
+                  selectedCategory === item.name && styles.selectedNavText,
+                ]}
+              >
+                {item.name}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
 
-      {/* Search Bar */}
-      <View style={styles.searchContainer}>
-        <Text style={styles.searchPlaceholder}>Buscar em Restaurantes</Text>
-      </View>
+        {/* Search Bar */}
+        <View style={styles.searchContainer}>
+          <Text style={styles.searchPlaceholder}>Buscar em Restaurantes</Text>
+        </View>
 
-      {/* Categories */}
-      <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.categoriesContainer}>
-        {categorias.map(categoria => (
-          <TouchableOpacity key={categoria.id} style={styles.category}>
-            <Image source={categoria.image} style={styles.categoryImage} />
-            <Text style={styles.categoryText}>{categoria.name}</Text>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
+        {/* Categories */}
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.categoriesContainer}>
+          {categorias.map(categoria => (
+            <TouchableOpacity key={categoria.id} style={styles.category}>
+              <Image source={categoria.image} style={styles.categoryImage} />
+              <Text style={styles.categoryText}>{categoria.name}</Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
 
-      {/* Famous Dishes */}
-      <View style={styles.sectionContainer}>
-        <Text style={styles.sectionTitle}>Pratos famosos no almoço</Text>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.dishesContainer}>
-          {pratosFamosos.map(prato => (
-            <View key={prato.id} style={styles.dish}>
-              <Image source={prato.image} style={styles.dishImage} />
-              <Text style={styles.dishText}>{prato.name}</Text>
+        {/* Famous Dishes */}
+        <View style={styles.sectionContainer}>
+          <Text style={styles.sectionTitle}>Pratos famosos no almoço</Text>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.dishesContainer}>
+            {pratosFamosos.map(prato => (
+              <View key={prato.id} style={styles.dish}>
+                <Image source={prato.image} style={styles.dishImage} />
+                <Text style={styles.dishText}>{prato.name}</Text>
+              </View>
+            ))}
+          </ScrollView>
+        </View>
+
+        {/* Banner */}
+        <View style={styles.bannerContainer}>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            pagingEnabled
+            onScroll={handleScroll}
+            scrollEventThrottle={16}
+            ref={scrollViewRef}
+          >
+            {banners.map(banner => (
+              <Image key={banner.id} source={banner.source} style={styles.bannerImage} />
+            ))}
+          </ScrollView>
+          <View style={styles.paginationContainer}>
+            {banners.map((_, index) => (
+              <View key={index} style={[
+                styles.paginationDot,
+                { opacity: index === activeSlide ? 1 : 0.3 }
+              ]} />
+            ))}
+          </View>
+        </View>
+
+        {/* Recent Stores */}
+        <View style={styles.sectionContainer}>
+          <Text style={styles.sectionTitle}>Últimas Lojas</Text>
+          <Text style={styles.viewMore}>Ver mais</Text>
+        </View>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.recentStoresContainer}>
+          {recentStores.map(store => (
+            <View key={store.id} style={styles.store}>
+              <Image source={store.image} style={styles.storeImage} />
+              <Text style={styles.storeText} numberOfLines={2} ellipsizeMode="tail">{store.name}</Text>
             </View>
           ))}
         </ScrollView>
-      </View>
-
-      {/* Banner */}
-      <View style={styles.bannerContainer}>
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          pagingEnabled
-          onScroll={handleScroll}
-          scrollEventThrottle={16}
-          ref={scrollViewRef}
-        >
-          {banners.map(banner => (
-            <Image key={banner.id} source={banner.source} style={styles.bannerImage} />
-          ))}
-        </ScrollView>
-        <View style={styles.paginationContainer}>
-          {banners.map((_, index) => (
-            <View key={index} style={[
-              styles.paginationDot,
-              { opacity: index === activeSlide ? 1 : 0.3 }
-            ]} />
-          ))}
-        </View>
-      </View>
-
-      {/* Recent Stores */}
-      <View style={styles.sectionContainer}>
-        <Text style={styles.sectionTitle}>Últimas Lojas</Text>
-        <Text style={styles.viewMore}>Ver mais</Text>
-      </View>
-      <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.recentStoresContainer}>
-        {recentStores.map(store => (
-          <View key={store.id} style={styles.store}>
-            <Image source={store.image} style={styles.storeImage} />
-            <Text style={styles.storeText}  numberOfLines={2} ellipsizeMode="tail">{store.name}</Text>
-          </View>
-        ))}
       </ScrollView>
-    </ScrollView>
+    </View>
   );
 }
 
@@ -170,16 +173,27 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    paddingTop: 20,
   },
   headerContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 16,
+    padding: 30,
     backgroundColor: '#fff',
   },
   backButton: {
     fontSize: 18,
     color: '#E4002B',
+  },
+  address: {
+    flex: 1,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontSize: 18,
+    color: '#000',
+  },
+  content: {
+    flex: 1,
   },
   bannerContainer: {
     padding: 10,
@@ -203,12 +217,6 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     backgroundColor: '#000',
     marginHorizontal: 4,
-  },
-  address: {
-    flex: 1,
-    textAlign: 'center',
-    fontWeight: 'bold',
-    fontSize: 18,
   },
   navContainer: {
     flexDirection: 'row',
@@ -264,7 +272,7 @@ const styles = StyleSheet.create({
   },
   sectionContainer: {
     marginTop: 20,
-    paddingHorizontal: 16,
+    paddingHorizontal: 10,
   },
   sectionTitle: {
     fontSize: 18,
@@ -304,11 +312,6 @@ const styles = StyleSheet.create({
     color: '#000',
     textAlign: 'center',
     width: 70,
-  },
-  itemImage2: {
-    width: '100%',
-    height: 200,
-    resizeMode: 'contain',
   },
   viewMore: {
     color: '#E4002B',
