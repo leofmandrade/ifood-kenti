@@ -58,7 +58,7 @@ const StrogonoffModal = ({ visible, onClose }) => {
                     showsVerticalScrollIndicator={false}
                 >
                     <Text style={styles.text}>Strogonoff de Camarão</Text>
-                    <Text style={styles.content}>Aqui vai o conteúdo do modal...</Text>
+                    <Text style={styles.content}>Aqui vai o conteúdo do strogonoff...</Text>
                     <Text style={styles.content}>Mais conteúdo...</Text>
                     <Text style={styles.content}>Mais conteúdo...</Text>
                     <Text style={styles.content}>Mais conteúdo...</Text>
@@ -71,7 +71,7 @@ const StrogonoffModal = ({ visible, onClose }) => {
                     <Text style={styles.content}>Mais conteúdo...</Text>
                     <Text style={styles.content}>Mais conteúdo...</Text>
                     <Text style={styles.content}>Mais conteúdo...</Text>
-                    <Text style={styles.content}>Mais conteúdo...</Text>
+                    <Text style={styles.content}>Mais conteúdo..x'.</Text>
                     <Text style={styles.content}>Mais conteúdo...</Text>
                     <Text style={styles.content}>Mais conteúdo...</Text>
                     <Text style={styles.content}>Mais conteúdo...</Text>
