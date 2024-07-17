@@ -183,13 +183,14 @@ const styles = StyleSheet.create({
   },
   backButton: {
     fontSize: 18,
+    fontFamily: 'iFoodRCTextos-Regular',
     color: '#E4002B',
   },
   address: {
     flex: 1,
     textAlign: 'center',
-    fontWeight: 'bold',
     fontSize: 18,
+    fontFamily: 'iFoodRCTextos-Bold',
     color: '#000',
   },
   content: {
@@ -241,6 +242,7 @@ const styles = StyleSheet.create({
   },
   navText: {
     fontSize: 14,
+    fontFamily: 'iFoodRCTextos-Regular',
     color: '#333',
   },
   selectedNavText: {
@@ -254,6 +256,7 @@ const styles = StyleSheet.create({
   },
   searchPlaceholder: {
     color: '#999',
+    fontFamily: 'iFoodRCTextos-Regular',
   },
   categoriesContainer: {
     paddingVertical: 10,
@@ -269,6 +272,7 @@ const styles = StyleSheet.create({
   },
   categoryText: {
     fontSize: 12,
+    fontFamily: 'iFoodRCTextos-Regular',
   },
   sectionContainer: {
     marginTop: 20,
@@ -276,7 +280,7 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontFamily: 'iFoodRCTextos-Bold',
   },
   dishesContainer: {
     marginTop: 10,
@@ -293,6 +297,7 @@ const styles = StyleSheet.create({
   dishText: {
     marginTop: 5,
     fontSize: 12,
+    fontFamily: 'iFoodRCTextos-Regular',
   },
   recentStoresContainer: {
     paddingVertical: 10,
@@ -308,6 +313,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   storeText: {
+    fontFamily: 'iFoodRCTextos-Regular',
     fontSize: 14,
     color: '#000',
     textAlign: 'center',

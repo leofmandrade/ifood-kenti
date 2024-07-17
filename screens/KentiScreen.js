@@ -192,7 +192,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#000',
   },
   scrollView: {
-    marginTop: 0,
+    // margintop in order to avoid the fixedHeader and fixedFilters
+    marginTop: Platform.OS === 'ios' ? 30 : StatusBar.currentHeight + 50, // Ajustar para iOS e Android
   },
   scrollViewContent: {
     paddingTop: height * 0.30,
@@ -209,6 +210,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'transparent',
+    marginBottom: 10,
   },
   backButton: {
     position: 'absolute',
@@ -216,15 +218,15 @@ const styles = StyleSheet.create({
   },
   backButtonText: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontFamily: 'iFoodRCTextos-Bold',
   },
   fixedTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontFamily: 'iFoodRCTextos-Bold',
   },
   fixedFilters: {
     position: 'absolute',
-    top: Platform.OS === 'ios' ? 50 : StatusBar.currentHeight + 50, // Ajustar para iOS e Android
+    top: Platform.OS === 'ios' ? 50 : StatusBar.currentHeight + 10, // Ajustar para iOS e Android
     left: 0,
     right: 0,
     zIndex: 2, // Certifique-se de que o zIndex seja menor que o fixedHeader
@@ -235,7 +237,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontFamily: 'iFoodRCTextos-Bold',
     marginBottom: 10,
   },
   filtersContainer: {
@@ -249,7 +251,7 @@ const styles = StyleSheet.create({
   },
   filterText: {
     fontSize: 14,
-    fontWeight: 'bold',
+    fontFamily: 'iFoodRCTextos-Bold',
   },
   restaurantCard: {
     borderColor: '#e6e6e6',
@@ -280,16 +282,18 @@ const styles = StyleSheet.create({
   },
   restaurantName: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontFamily: 'iFoodRCTextos-Bold',
   },
   restaurantRating: {
     fontSize: 14,
+    fontFamily: 'iFoodRCTextos-Regular',
     color: '#bd8a00',
     marginLeft: 8,
   },
   restaurantDetails: {
     fontSize: 12,
     color: '#555',
+    fontFamily: 'iFoodRCTextos-Regular',
     marginTop: 4,
   },
 });

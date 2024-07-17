@@ -3,6 +3,7 @@
     "name": "ifood-kenti",
     "slug": "ifood-kenti",
     "version": "1.0.0",
+    "assets": ["./assets/fonts/"],
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",

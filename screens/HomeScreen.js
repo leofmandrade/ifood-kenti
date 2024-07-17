@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
   address: {
     fontSize: 18,
     color: '#000',
-    fontWeight: 'bold',
+    fontFamily: 'iFoodRCTextos-Bold',
   },
   scrollContainer: {
     paddingTop: 80, // Adjust according to the height of the fixed address
@@ -238,12 +238,13 @@ const styles = StyleSheet.create({
   },
   categoryText: {
     fontSize: 14,
+    fontFamily: 'iFoodRCTextos-Regular',
     color: '#000',
   },
   categoryTextRestaurantes: {
     fontSize: 14,
+    fontFamily: 'iFoodRCTextos-Bold',
     color: '#000',
-    fontWeight: 'bold',
   },
   bannerContainer: {
     padding: 10,
@@ -277,10 +278,11 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 18,
     color: '#000',
-    fontWeight: 'bold',
+    fontFamily: 'iFoodRCTextos-Bold',
   },
   viewMore: {
     fontSize: 14,
+    fontFamily: 'iFoodRCTextos-Regular',
     color: '#E4002B',
   },
   freeDeliveryContainer: {
@@ -309,23 +311,26 @@ const styles = StyleSheet.create({
   },
   itemTitle: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontFamily: 'iFoodRCTextos-Bold',
     color: '#000',
     marginBottom: 5,
   },
   itemPrice: {
     fontSize: 16,
+    fontFamily: 'iFoodRCTextos-Regular',
     color: '#298559',
   },
   itemOldPrice: {
     fontSize: 14,
     color: '#999',
+    fontFamily: 'iFoodRCTextos-Regular',
     textDecorationLine: 'line-through',
     marginBottom: 5,
   },
   itemTime: {
     fontSize: 14,
     color: '#000',
+    fontFamily: 'iFoodRCTextos-Regular',
   },
   recentStoresContainer: {
     padding: 10,
@@ -342,6 +347,7 @@ const styles = StyleSheet.create({
   },
   storeText: {
     fontSize: 14,
+    fontFamily: 'iFoodRCTextos-Regular',
     color: '#000',
     textAlign: 'center',
     width: 70,

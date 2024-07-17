@@ -1,11 +1,25 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useLayoutEffect } from 'react';
 import { Animated, ScrollView, View, Text, Image, StyleSheet, TouchableOpacity, StatusBar, Dimensions, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import StrogonoffModal from './StrogonoffModal';
 const { width, height } = Dimensions.get('window');
+import { useFocusEffect } from '@react-navigation/native';
 
 
 export default function CameloScreen({ navigation }) {
+    useFocusEffect(
+        React.useCallback(() => {
+          navigation.getParent().setOptions({
+            tabBarStyle: { display: 'none' }
+          });
+    
+          return () => navigation.getParent().setOptions({
+            tabBarStyle: undefined
+          });
+        }, [navigation])
+      );
+    
+
     const scrollY = useRef(new Animated.Value(0)).current;
     const scrollViewRef = useRef(null);
     const [modalVisible, setModalVisible] = useState(false);
@@ -391,7 +405,7 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
   },
   scrollView: {
-    marginTop: 0,
+    marginTop: Platform.OS === 'ios' ? 30 : StatusBar.currentHeight + 30, // Ajustar para iOS e Android
   },
   scrollViewContent: {
     paddingTop: height * 0.30,
@@ -415,11 +429,11 @@ const styles = StyleSheet.create({
   },
   backButtonText: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontFamily: 'iFoodRCTextos-Bold',
   },
   fixedTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontFamily: 'iFoodRCTextos-Bold',
   },
   fixedFilters: {
     position: 'absolute',
@@ -434,7 +448,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontFamily: 'iFoodRCTextos-Bold',
     marginBottom: 10,
   },
   filtersScroll: {
@@ -448,7 +462,7 @@ const styles = StyleSheet.create({
   },
   filterText: {
     fontSize: 14,
-    fontWeight: 'bold',
+    fontFamily: 'iFoodRCTextos-Bold',
   },
   horizontalScroll: {
     flexDirection: 'row',
@@ -456,7 +470,7 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontFamily: 'iFoodRCTextos-Bold',
     marginVertical: 10,
   },
   pratosContainer: {
@@ -511,33 +525,35 @@ const styles = StyleSheet.create({
   },
   restaurantName: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontFamily: 'iFoodRCTextos-Bold',
     width: 120,
   },
   restaurantNameMaisPedidos: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontFamily: 'iFoodRCTextos-Bold',
     width: 120,
   },
   restaurantRating: {
     fontSize: 14,
+    fontFamily: 'iFoodRCTextos-Regular',
     color: '#bd8a00',
     marginLeft: 8,
   },
   restaurantDetails: {
     fontSize: 14,
     color: '#555',
+    fontFamily: 'iFoodRCTextos-Regular',
     marginTop: 4,
   },
   restaurantDetailsPrice: {
     fontSize: 14,
-    fontWeight: 'bold',
+    fontFamily: 'iFoodRCTextos-Bold',
     color: '#555',
     marginTop: 4,
   },
   restaurantDetailsServe: {
     fontSize: 12,
-    fontWeight: 'bold',
+    fontFamily: 'iFoodRCTextos-Bold',
     marginTop: 4,
   },
 });

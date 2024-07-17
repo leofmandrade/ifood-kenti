@@ -1,3 +1,4 @@
+// App.js
 import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -14,7 +15,6 @@ import OrdersScreen from './screens/OrdersScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import KentiScreen from './screens/KentiScreen';
 import CameloScreen from './screens/CameloScreen';
-
 
 import HomeIcon from './assets/homeicon.png';
 import SearchIcon from './assets/searchicon.png';
@@ -85,6 +85,7 @@ export default function App() {
       await Font.loadAsync({
         'iFoodRCTextos-Regular': require('./assets/fonts/iFoodRCTextos-Regular.ttf'),
         'iFoodRCTextos-Bold': require('./assets/fonts/iFoodRCTextos-Bold.ttf'),
+        'iFoodRCTextos-Thin': require('./assets/fonts/iFoodRCTextos-Thin.ttf'),
       });
       setFontLoaded(true);
     }
@@ -104,7 +105,6 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Splash">
         <Stack.Screen name="Splash" component={SplashScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Restaurants" component={RestaurantScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Main" component={MainTabs} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>

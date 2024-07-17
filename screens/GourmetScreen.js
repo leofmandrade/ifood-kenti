@@ -123,12 +123,14 @@ const styles = StyleSheet.create({
   },
   backButton: {
     fontSize: 18,
+    fontFamily: 'iFoodRCTextos-Regular',
     color: '#E4002B',
   },
   title: {
     flex: 1,
     textAlign: 'center',
     fontSize: 18,
+    fontFamily: 'iFoodRCTextos-Regular',
   },
   initialBannerContainer: {
     paddingHorizontal: 16,
@@ -144,7 +146,7 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontFamily: 'iFoodRCTextos-Bold',
   },
   sectionHeader: {
     flexDirection: 'row',
@@ -158,6 +160,7 @@ const styles = StyleSheet.create({
   seeMoreButtonText: {
     color: '#fff',
     fontSize: 14,
+    fontFamily: 'iFoodRCTextos-Regular',
   },
   categoriesContainer: {
     flexDirection: 'row',
@@ -191,6 +194,7 @@ const styles = StyleSheet.create({
   restaurantText: {
     marginTop: 5,
     fontSize: 12,
+    fontFamily: 'iFoodRCTextos-Regular',
     textAlign: 'center',
     width: 80,
   },
