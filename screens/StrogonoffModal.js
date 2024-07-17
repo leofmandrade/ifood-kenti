@@ -50,6 +50,16 @@ const StrogonoffModal = ({ visible, onClose }) => {
         if (quantity > 1) setQuantity(quantity - 1);
     };
 
+    const handleAdd = () => {
+        Animated.timing(translateY, {
+            toValue: height,
+            duration: 500,
+            useNativeDriver: true,
+        }).start(() => {
+            onClose();
+        });
+    };
+
     if (!visible) return null;
 
     return (
@@ -106,7 +116,7 @@ const StrogonoffModal = ({ visible, onClose }) => {
                             <AntDesign name="plus" size={20} color="black" />
                         </TouchableOpacity>
                     </View>
-                    <TouchableOpacity style={styles.addButton}>
+                    <TouchableOpacity style={styles.addButton} onPress={handleAdd}>
                         <Text style={styles.addButtonText}>Adicionar</Text>
                         <Text style={styles.addButtonPrice}>R$ 224,00</Text>
                     </TouchableOpacity>
