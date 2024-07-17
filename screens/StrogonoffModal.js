@@ -120,13 +120,13 @@ const StrogonoffModal = ({ visible, onClose }) => {
 const styles = StyleSheet.create({
     overlay: {
         ...StyleSheet.absoluteFillObject,
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        // backgroundColor: 'white',
         justifyContent: 'flex-end',
         zIndex: 1000,
     },
     container: {
         width: '100%',
-        height: '90%',
+        height: '100%',
         backgroundColor: 'white',
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
@@ -280,7 +280,7 @@ const styles = StyleSheet.create({
     },
     addButtonPrice: {
         color: 'white',
-        fontFamily: 'iFoodRCTextos-Regular',
+    fontFamily: 'iFoodRCTextos-Regular',
         fontSize: 18,
     },
 });
