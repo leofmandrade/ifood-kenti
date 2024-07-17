@@ -33,7 +33,7 @@ export default function SplashScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <Animated.Image
-        source={require('../assets/ifoodlogo.png')}
+        source={require('../assets/seulogo.png')}
         style={[styles.image, { transform: [{ scale: scaleValue }] }]}
       />
       <Animated.View
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     
   },
   image: {
-    width: '80%',
+    width: '500%',
     resizeMode: 'contain',
   },
   whiteOverlay: {

@@ -14,16 +14,16 @@ export default function RestaurantScreen({ navigation }) {
   };
 
   const banners = [
-    { id: '1', source: require('../assets/pecatudaoimg.png') },
+    { id: '1', source: require('../assets/almocobomebarato.png') },
     { id: '2', source: require('../assets/almocobomebarato.png') },
-    { id: '3', source: require('../assets/pecamequi.png') },
+    { id: '3', source: require('../assets/almocobomebarato.png') },
   ];
 
   const categorias = [
     { id: 1, name: 'Marmita', image: require('../assets/marmita.png') },
     { id: 2, name: 'Árabe', image: require('../assets/arabe.png') },
     { id: 3, name: 'Brasileira', image: require('../assets/feijoada.png') },
-    { id: 4, name: 'Promoções', image: require('../assets/promocoes.png') },
+    // { id: 4, name: 'Promoções', image: require('../assets/promocoes.png') },
     { id: 5, name: 'Saudavel', image: require('../assets/saudavel.png') },
     { id: 6, name: 'Lanches', image: require('../assets/lanches.png') },
   ];

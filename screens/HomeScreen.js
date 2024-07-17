@@ -2,9 +2,9 @@ import React, { useState, useRef } from 'react';
 import { View, ScrollView, Image, StyleSheet, TouchableOpacity, Text, Dimensions, StatusBar } from 'react-native';
 
 const banners = [
-  { id: '1', source: require('../assets/pecatudaoimg.png') },
+  { id: '1', source: require('../assets/almocobomebarato.png') },
   { id: '2', source: require('../assets/almocobomebarato.png') },
-  { id: '3', source: require('../assets/pecamequi.png') },
+  { id: '3', source: require('../assets/almocobomebarato.png') },
 ];
 
 const freeDeliveryItems = [

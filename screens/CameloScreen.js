@@ -1,6 +1,8 @@
 import React, { useRef, useState } from 'react';
-import { Animated, ScrollView, View, Text, Image, StyleSheet, TouchableOpacity, StatusBar } from 'react-native';
+import { Animated, ScrollView, View, Text, Image, StyleSheet, TouchableOpacity, StatusBar, Dimensions, Platform } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import StrogonoffModal from './StrogonoffModal';
+const { width, height } = Dimensions.get('window');
 
 
 export default function CameloScreen({ navigation }) {
@@ -75,297 +77,306 @@ export default function CameloScreen({ navigation }) {
         outputRange: ['#fff', '#000'],
         extrapolate: 'clamp',
     });
-    return (
-        <View style={styles.container}>
-        <StatusBar barStyle="dark-content" backgroundColor="transparent" translucent={true} />
+        return (
+            <SafeAreaView style={styles.container}>
+            <StatusBar barStyle="dark-content" backgroundColor="transparent" translucent={true} />
 
-        <Animated.View style={[styles.bannerContainer, {
-            transform: [{
-            translateY: scrollY.interpolate({
-                inputRange: [0, 150],
-                outputRange: [0, -150],
-                extrapolate: 'clamp',
-            })
-            }]
-        }]}>
-            <Animated.Image 
-            source={require('../assets/camelosalao.png')} 
-            style={[styles.bannerImage, {
-                opacity: scrollY.interpolate({
-                inputRange: [0, 150],
-                outputRange: [1, 0],
-                extrapolate: 'clamp',
-                })
-            }]}
-            />
-        </Animated.View>
-
-        <Animated.View style={[styles.fixedHeader, {
-            backgroundColor: scrollY.interpolate({
-            inputRange: [0, 150],
-            outputRange: ['transparent', '#fff'],
-            extrapolate: 'clamp',
-            })
-        }]}>
-            <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-            <Animated.Text style={[styles.backButtonText, { color: backButtonColor }]}>
-                {'<'}
-            </Animated.Text>
-            </TouchableOpacity>
-            <Animated.Text style={[styles.fixedTitle, {
-            opacity: scrollY.interpolate({
-                inputRange: [0, 150],
-                outputRange: [0, 1],
-                extrapolate: 'clamp',
-            })
-            }]}>CAMELO MOEMA</Animated.Text>
-        </Animated.View>
-
-        <Animated.View style={[styles.fixedFilters, {
-            backgroundColor: scrollY.interpolate({
-            inputRange: [0, 150],
-            outputRange: ['transparent', '#fff'],
-            extrapolate: 'clamp',
-            }),
-            transform: [{
-            translateY: scrollY.interpolate({
-                inputRange: [0, 150],
-                outputRange: [150, 0],
-                extrapolate: 'clamp',
-            })
-            }]
-        }]}>
-            <Animated.Text style={[styles.title, {
-            opacity: scrollY.interpolate({
-                inputRange: [0, 150],
-                outputRange: [1, 0],
-                extrapolate: 'clamp',
-            })
-            }]}>Pizzaria Camelo</Animated.Text>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.filtersScroll}>
-            {sections.map((section, index) => (
-                <TouchableOpacity key={section.id} style={styles.filterButton} onPress={() => scrollToSection(index)}>
-                <Text style={styles.filterText}>{section.name}</Text>
-                </TouchableOpacity>
-            ))}
-            </ScrollView>
-        </Animated.View>
-
-        <Animated.ScrollView
-            style={styles.scrollView}
-            contentContainerStyle={styles.scrollViewContent}
-            ref={scrollViewRef}
-            onScroll={Animated.event(
-            [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-            { useNativeDriver: false }
-            )}
-            scrollEventThrottle={16}
-        >
-            <Animated.View style={{
-            transform: [{
-                translateY: scrollY.interpolate({
-                inputRange: [0, 150],
-                outputRange: [0, -150],
-                extrapolate: 'clamp',
-                })
-            }],
-            borderTopLeftRadius: 20,
-            borderTopRightRadius: 20,
-            overflow: 'hidden',
-            backgroundColor: '#fff',
-            }}>
-            <Text style={styles.sectionTitle}>Os mais pedidos</Text>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.horizontalScroll}>
-                {maispedidos.slice(0, 5).map((restaurant) => (
-                <TouchableOpacity 
-                    key={restaurant.id} 
-                    style={{ marginBottom: 16, marginRight: 16 }}
-                >
-                    <View style={styles.restaurantCardHorizontal}>
-                    <Image source={restaurant.image} style={styles.restaurantImageHorizontal} />
-                    <View style={styles.restaurantInfo}>
-                    <Text style={styles.restaurantDetailsPrice}>{restaurant.price}</Text>
-                    <Text style={styles.restaurantNameMaisPedidos} ellipsizeMode="tail">{restaurant.name}</Text>
-                    </View>
-                    </View>
-                </TouchableOpacity>
-                ))}
-            </ScrollView>
-
-            <Text style={styles.sectionTitle}>Strogonoffs</Text>
-            <View style={styles.pratosContainer}>
-            {strogonoffs.map((restaurant, index) => (
-            <TouchableOpacity 
-                key={restaurant.id} 
-                onPress={() => {
-                    if (restaurant.name === 'Strogonoff de camarão') {
-                        setModalVisible(true);
-                    }
-                }}
-                style={{ marginBottom: 16 }}
-            >
-                <Animated.View style={{
-                opacity: scrollY.interpolate({
-                    inputRange: [0, 300],
-                    outputRange: [1, 1],
+            <Animated.View style={[styles.bannerContainer, {
+                backgroundColor: scrollY.interpolate({
+                    inputRange: [0, 150],
+                    outputRange: ['#000', '#fff'],
                     extrapolate: 'clamp',
                 }),
-                }}>
-                <View style={styles.restaurantCard}>
-                    <View style={styles.restaurantInfoVertical}>
-                    <View style={styles.nameRatingContainer}>
-                        <Text style={styles.restaurantName}>{restaurant.name}</Text>
-                    </View>
-                        <Text style={styles.restaurantDetails}>{restaurant.descricao}</Text>
-                        <Text style={styles.restaurantDetailsServe}>{restaurant.serve}</Text>
-                        <Text style={styles.restaurantDetailsPrice}>{restaurant.price}</Text>
-                    </View>
-                    <Image source={restaurant.image} style={styles.restaurantImageVertical} />
-                </View>
-                </Animated.View>
-            </TouchableOpacity>
-            ))}
-        </View>
-
-
-            <Text style={styles.sectionTitle}>Porções</Text>
-            <View style={styles.pratosContainer}>
-                {porcoes.map((restaurant, index) => (
-                <View 
-                    key={restaurant.id} 
-                    style={{ marginBottom: 16 }}
-                >
-                    <Animated.View style={{
+                transform: [{
+                translateY: scrollY.interpolate({
+                    inputRange: [0, 150],
+                    outputRange: [0, -150],
+                    extrapolate: 'clamp',
+                })
+                }]
+            }]}>
+                <Animated.Image 
+                source={require('../assets/camelosalao.png')} 
+                style={[styles.bannerImage, {
                     opacity: scrollY.interpolate({
-                        inputRange: [0, 300],
-                        outputRange: [1, 1],
-                        extrapolate: 'clamp',
-                    }),
-                    }}>
-                    <View style={styles.restaurantCard}>
-                        <View style={styles.restaurantInfoVertical}>
-                        <View style={styles.nameRatingContainer}>
-                            <Text style={styles.restaurantName}>{restaurant.name}</Text>
-                        </View>
-                            <Text style={styles.restaurantDetails}>{restaurant.descricao}</Text>
-                            <Text style={styles.restaurantDetailsServe}>{restaurant.serve}</Text>
-                            <Text style={styles.restaurantDetailsPrice}>{restaurant.price}</Text>
-
-                        </View>
-                        <Image source={restaurant.image} style={styles.restaurantImageVertical} />
-                    </View>
-                    </Animated.View>
-                </View>
-                ))}
-            </View>
-
-            <Text style={styles.sectionTitle}>Filés</Text>
-            <View style={styles.pratosContainer}>
-                {files.map((restaurant, index) => (
-                <View 
-                    key={restaurant.id} 
-                    style={{ marginBottom: 16 }}
-                >
-                    <Animated.View style={{
-                    opacity: scrollY.interpolate({
-                        inputRange: [0, 300],
-                        outputRange: [1, 1],
-                        extrapolate: 'clamp',
-                    }),
-                    }}>
-                    <View style={styles.restaurantCard}>
-                        <View style={styles.restaurantInfoVertical}>
-                        <View style={styles.nameRatingContainer}>
-                            <Text style={styles.restaurantName}>{restaurant.name}</Text>
-                        </View>
-                            <Text style={styles.restaurantDetails}>{restaurant.descricao}</Text>
-                            <Text style={styles.restaurantDetailsServe}>{restaurant.serve}</Text>
-                            <Text style={styles.restaurantDetailsPrice}>{restaurant.price}</Text>
-
-                        </View>
-                        <Image source={restaurant.image} style={styles.restaurantImageVertical} />
-                    </View>
-                    </Animated.View>
-                </View>
-                ))}
-            </View>
-
-            <Text style={styles.sectionTitle}>Pizzas</Text>
-            <View style={styles.pratosContainer}>
-                {pizzassalgadasgrande.map((restaurant, index) => (
-                <View 
-                    key={restaurant.id} 
-                    style={{ marginBottom: 16 }}
-                >
-                    <Animated.View style={{
-                    opacity: scrollY.interpolate({
-                        inputRange: [0, 300],
-                        outputRange: [1, 1],
-                        extrapolate: 'clamp',
-                    }),
-                    }}>
-                    <View style={styles.restaurantCard}>
-                        <View style={styles.restaurantInfoVertical}>
-                        <View style={styles.nameRatingContainer}>
-                            <Text style={styles.restaurantName}>{restaurant.name}</Text>
-                        </View>
-                            <Text style={styles.restaurantDetails}>{restaurant.descricao}</Text>
-                            <Text style={styles.restaurantDetailsServe}>{restaurant.serve}</Text>
-                            <Text style={styles.restaurantDetailsPrice}>{restaurant.price}</Text>
-
-                        </View>
-                        <Image source={restaurant.image} style={styles.restaurantImageVertical} />
-                    </View>
-                    </Animated.View>
-                </View>
-                ))}
-            </View>
-            <Text style={styles.sectionTitle}>Acompanhametos</Text>
-            <View style={styles.pratosContainer}>
-                {acompanhamentos.map((restaurant, index) => (
-                <View 
-                    key={restaurant.id} 
-                    style={{ marginBottom: 16 }}
-                >
-                    <Animated.View style={{
-                    opacity: scrollY.interpolate({
-                        inputRange: [0, 300],
-                        outputRange: [1, 1],
-                        extrapolate: 'clamp',
-                    }),
-                    }}>
-                    <View style={styles.restaurantCard}>
-                        <View style={styles.restaurantInfoVertical}>
-                        <View style={styles.nameRatingContainer}>
-                            <Text style={styles.restaurantName}>{restaurant.name}</Text>
-                        </View>
-                            <Text style={styles.restaurantDetails}>{restaurant.descricao}</Text>
-                            <Text style={styles.restaurantDetailsServe}>{restaurant.serve}</Text>
-                            <Text style={styles.restaurantDetailsPrice}>{restaurant.price}</Text>
-
-                        </View>
-                        <Image source={restaurant.image} style={styles.restaurantImageVertical} />
-                    </View>
-                    </Animated.View>
-                </View>
-                ))}
-            </View>
-
-
-
-
+                    inputRange: [0, 150],
+                    outputRange: [1, 0],
+                    extrapolate: 'clamp',
+                    })
+                }]}
+                />
             </Animated.View>
-        </Animated.ScrollView>
-        {modalVisible && <StrogonoffModal visible={modalVisible} onClose={() => setModalVisible(false)} />}
-        </View>
-    );
-}
+
+            <Animated.View style={[styles.fixedHeader, {
+                backgroundColor: scrollY.interpolate({
+                inputRange: [0, 150],
+                outputRange: ['transparent', '#fff'],
+                extrapolate: 'clamp',
+                })
+            }]}>
+                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+                <Animated.Text style={[styles.backButtonText, { color: backButtonColor }]}>
+                    {'<'}
+                </Animated.Text>
+                </TouchableOpacity>
+                <Animated.Text style={[styles.fixedTitle, {
+                backgroundColor: scrollY.interpolate({
+                inputRange: [0, 150],
+                outputRange: ['#000', '#fff'],
+                extrapolate: 'clamp',
+                }),
+                opacity: scrollY.interpolate({
+                    inputRange: [0, 150],
+                    outputRange: [0, 1],
+                    extrapolate: 'clamp',
+                })
+                }]}>CAMELO MOEMA</Animated.Text>
+            </Animated.View>
+
+            <Animated.View style={[styles.fixedFilters, {
+                backgroundColor: scrollY.interpolate({
+                inputRange: [0, 150],
+                outputRange: ['transparent', '#fff'],
+                extrapolate: 'clamp',
+                }),
+                transform: [{
+                translateY: scrollY.interpolate({
+                    inputRange: [0, 150],
+                    outputRange: [150, 0],
+                    extrapolate: 'clamp',
+                })
+                }]
+            }]}>
+                <Animated.Text style={[styles.title, {
+                opacity: scrollY.interpolate({
+                    inputRange: [0, 150],
+                    outputRange: [1, 0],
+                    extrapolate: 'clamp',
+                })
+                }]}>Pizzaria Camelo</Animated.Text>
+                <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.filtersScroll}>
+                {sections.map((section, index) => (
+                    <TouchableOpacity key={section.id} style={styles.filterButton} onPress={() => scrollToSection(index)}>
+                    <Text style={styles.filterText}>{section.name}</Text>
+                    </TouchableOpacity>
+                ))}
+                </ScrollView>
+            </Animated.View>
+
+            <Animated.ScrollView
+                style={styles.scrollView}
+                contentContainerStyle={styles.scrollViewContent}
+                ref={scrollViewRef}
+                onScroll={Animated.event(
+                [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+                { useNativeDriver: false }
+                )}
+                scrollEventThrottle={16}
+            >
+                <Animated.View style={{
+                transform: [{
+                    translateY: scrollY.interpolate({
+                    inputRange: [0, 150],
+                    outputRange: [0, -150],
+                    extrapolate: 'clamp',
+                    })
+                }],
+                borderTopLeftRadius: 20,
+                borderTopRightRadius: 20,
+                overflow: 'hidden',
+                backgroundColor: '#fff',
+                }}>
+                <Text style={styles.sectionTitle}>Os mais pedidos</Text>
+                <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.horizontalScroll}>
+                    {maispedidos.slice(0, 5).map((restaurant) => (
+                    <TouchableOpacity 
+                        key={restaurant.id} 
+                        style={{ marginBottom: 16, marginRight: 16 }}
+                    >
+                        <View style={styles.restaurantCardHorizontal}>
+                        <Image source={restaurant.image} style={styles.restaurantImageHorizontal} />
+                        <View style={styles.restaurantInfo}>
+                        <Text style={styles.restaurantDetailsPrice}>{restaurant.price}</Text>
+                        <Text style={styles.restaurantNameMaisPedidos} ellipsizeMode="tail">{restaurant.name}</Text>
+                        </View>
+                        </View>
+                    </TouchableOpacity>
+                    ))}
+                </ScrollView>
+
+                <Text style={styles.sectionTitle}>Strogonoffs</Text>
+                <View style={styles.pratosContainer}>
+                {strogonoffs.map((restaurant, index) => (
+                <TouchableOpacity 
+                    key={restaurant.id} 
+                    onPress={() => {
+                        if (restaurant.name === 'Strogonoff de camarão') {
+                            setModalVisible(true);
+                        }
+                    }}
+                    style={{ marginBottom: 16 }}
+                >
+                    <Animated.View style={{
+                    opacity: scrollY.interpolate({
+                        inputRange: [0, 300],
+                        outputRange: [1, 1],
+                        extrapolate: 'clamp',
+                    }),
+                    }}>
+                    <View style={styles.restaurantCard}>
+                        <View style={styles.restaurantInfoVertical}>
+                        <View style={styles.nameRatingContainer}>
+                            <Text style={styles.restaurantName}>{restaurant.name}</Text>
+                        </View>
+                            <Text style={styles.restaurantDetails}>{restaurant.descricao}</Text>
+                            <Text style={styles.restaurantDetailsServe}>{restaurant.serve}</Text>
+                            <Text style={styles.restaurantDetailsPrice}>{restaurant.price}</Text>
+                        </View>
+                        <Image source={restaurant.image} style={styles.restaurantImageVertical} />
+                    </View>
+                    </Animated.View>
+                </TouchableOpacity>
+                ))}
+            </View>
+
+
+                <Text style={styles.sectionTitle}>Porções</Text>
+                <View style={styles.pratosContainer}>
+                    {porcoes.map((restaurant, index) => (
+                    <View 
+                        key={restaurant.id} 
+                        style={{ marginBottom: 16 }}
+                    >
+                        <Animated.View style={{
+                        opacity: scrollY.interpolate({
+                            inputRange: [0, 300],
+                            outputRange: [1, 1],
+                            extrapolate: 'clamp',
+                        }),
+                        }}>
+                        <View style={styles.restaurantCard}>
+                            <View style={styles.restaurantInfoVertical}>
+                            <View style={styles.nameRatingContainer}>
+                                <Text style={styles.restaurantName}>{restaurant.name}</Text>
+                            </View>
+                                <Text style={styles.restaurantDetails}>{restaurant.descricao}</Text>
+                                <Text style={styles.restaurantDetailsServe}>{restaurant.serve}</Text>
+                                <Text style={styles.restaurantDetailsPrice}>{restaurant.price}</Text>
+
+                            </View>
+                            <Image source={restaurant.image} style={styles.restaurantImageVertical} />
+                        </View>
+                        </Animated.View>
+                    </View>
+                    ))}
+                </View>
+
+                <Text style={styles.sectionTitle}>Filés</Text>
+                <View style={styles.pratosContainer}>
+                    {files.map((restaurant, index) => (
+                    <View 
+                        key={restaurant.id} 
+                        style={{ marginBottom: 16 }}
+                    >
+                        <Animated.View style={{
+                        opacity: scrollY.interpolate({
+                            inputRange: [0, 300],
+                            outputRange: [1, 1],
+                            extrapolate: 'clamp',
+                        }),
+                        }}>
+                        <View style={styles.restaurantCard}>
+                            <View style={styles.restaurantInfoVertical}>
+                            <View style={styles.nameRatingContainer}>
+                                <Text style={styles.restaurantName}>{restaurant.name}</Text>
+                            </View>
+                                <Text style={styles.restaurantDetails}>{restaurant.descricao}</Text>
+                                <Text style={styles.restaurantDetailsServe}>{restaurant.serve}</Text>
+                                <Text style={styles.restaurantDetailsPrice}>{restaurant.price}</Text>
+
+                            </View>
+                            <Image source={restaurant.image} style={styles.restaurantImageVertical} />
+                        </View>
+                        </Animated.View>
+                    </View>
+                    ))}
+                </View>
+
+                <Text style={styles.sectionTitle}>Pizzas</Text>
+                <View style={styles.pratosContainer}>
+                    {pizzassalgadasgrande.map((restaurant, index) => (
+                    <View 
+                        key={restaurant.id} 
+                        style={{ marginBottom: 16 }}
+                    >
+                        <Animated.View style={{
+                        opacity: scrollY.interpolate({
+                            inputRange: [0, 300],
+                            outputRange: [1, 1],
+                            extrapolate: 'clamp',
+                        }),
+                        }}>
+                        <View style={styles.restaurantCard}>
+                            <View style={styles.restaurantInfoVertical}>
+                            <View style={styles.nameRatingContainer}>
+                                <Text style={styles.restaurantName}>{restaurant.name}</Text>
+                            </View>
+                                <Text style={styles.restaurantDetails}>{restaurant.descricao}</Text>
+                                <Text style={styles.restaurantDetailsServe}>{restaurant.serve}</Text>
+                                <Text style={styles.restaurantDetailsPrice}>{restaurant.price}</Text>
+
+                            </View>
+                            <Image source={restaurant.image} style={styles.restaurantImageVertical} />
+                        </View>
+                        </Animated.View>
+                    </View>
+                    ))}
+                </View>
+                <Text style={styles.sectionTitle}>Acompanhametos</Text>
+                <View style={styles.pratosContainer}>
+                    {acompanhamentos.map((restaurant, index) => (
+                    <View 
+                        key={restaurant.id} 
+                        style={{ marginBottom: 16 }}
+                    >
+                        <Animated.View style={{
+                        opacity: scrollY.interpolate({
+                            inputRange: [0, 300],
+                            outputRange: [1, 1],
+                            extrapolate: 'clamp',
+                        }),
+                        }}>
+                        <View style={styles.restaurantCard}>
+                            <View style={styles.restaurantInfoVertical}>
+                            <View style={styles.nameRatingContainer}>
+                                <Text style={styles.restaurantName}>{restaurant.name}</Text>
+                            </View>
+                                <Text style={styles.restaurantDetails}>{restaurant.descricao}</Text>
+                                <Text style={styles.restaurantDetailsServe}>{restaurant.serve}</Text>
+                                <Text style={styles.restaurantDetailsPrice}>{restaurant.price}</Text>
+
+                            </View>
+                            <Image source={restaurant.image} style={styles.restaurantImageVertical} />
+                        </View>
+                        </Animated.View>
+                    </View>
+                    ))}
+                </View>
+
+
+
+
+                </Animated.View>
+            </Animated.ScrollView>
+            {modalVisible && <StrogonoffModal visible={modalVisible} onClose={() => setModalVisible(false)} />}
+            </SafeAreaView>
+        );
+    }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    paddingTop: StatusBar.currentHeight,
   },
   bannerContainer: {
     position: 'absolute',
@@ -383,16 +394,16 @@ const styles = StyleSheet.create({
     marginTop: 0,
   },
   scrollViewContent: {
-    paddingTop: 300 + StatusBar.currentHeight,
+    paddingTop: height * 0.30,
     paddingHorizontal: 16,
   },
   fixedHeader: {
     position: 'absolute',
-    top: StatusBar.currentHeight,
+    top: Platform.OS === 'ios' ? 30 : StatusBar.currentHeight, // Ajustar para iOS e Android
     left: 0,
     right: 0,
     height: 50,
-    zIndex: 2,
+    zIndex: 3, // Certifique-se de que o header tenha um zIndex maior que o fixedFilters
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',

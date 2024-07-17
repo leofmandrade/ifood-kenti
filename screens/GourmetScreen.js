@@ -82,28 +82,28 @@ export default function GourmetScreen({ navigation }) {
 
 
     {/* Banner */}
-        <View style={styles.bannerContainer}>
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          pagingEnabled
-          onScroll={handleScroll}
-          scrollEventThrottle={16}
-          ref={scrollViewRef}
-        >
-          {banners.map(banner => (
-            <Image key={banner.id} source={banner.source} style={styles.bannerImage} />
-          ))}
-        </ScrollView>
-        <View style={styles.paginationContainer}>
-          {banners.map((_, index) => (
-            <View key={index} style={[
-              styles.paginationDot,
-              { opacity: index === activeSlide ? 1 : 0.3 }
-            ]} />
-          ))}
+    <View style={styles.bannerContainer}>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            pagingEnabled
+            onScroll={handleScroll}
+            scrollEventThrottle={16}
+            ref={scrollViewRef}
+          >
+            {banners.map(banner => (
+              <Image key={banner.id} source={banner.source} style={styles.bannerImage} />
+            ))}
+          </ScrollView>
+          <View style={styles.paginationContainer}>
+            {banners.map((_, index) => (
+              <View key={index} style={[
+                styles.paginationDot,
+                { opacity: index === activeSlide ? 1 : 0.3 }
+              ]} />
+            ))}
+          </View>
         </View>
-      </View>
     </ScrollView>
   );
 }

@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
-import { Animated, ScrollView, View, Text, Image, StyleSheet, TouchableOpacity, StatusBar, Dimensions } from 'react-native';
+import { Animated, ScrollView, View, Text, Image, StyleSheet, TouchableOpacity, StatusBar, Dimensions, Platform } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const { width, height } = Dimensions.get('window');
 
@@ -25,17 +26,15 @@ export default function KentiScreen({ navigation }) {
   });
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="transparent" translucent={true} />
 
       <Animated.View style={[styles.bannerContainer, {
-        paddingTop: StatusBar.currentHeight,
         backgroundColor: scrollY.interpolate({
           inputRange: [0, 150],
           outputRange: ['#000', '#fff'],
           extrapolate: 'clamp',
         }),
-
         transform: [{
           translateY: scrollY.interpolate({
             inputRange: [0, 150],
@@ -45,7 +44,7 @@ export default function KentiScreen({ navigation }) {
         }]
       }]}>
         <Animated.Image 
-          source={require('../assets/kenti.jpg')} 
+          source={require('../assets/kentibag.jpg')} 
           style={[styles.bannerImage, {
             opacity: scrollY.interpolate({
               inputRange: [0, 150],
@@ -61,7 +60,7 @@ export default function KentiScreen({ navigation }) {
           inputRange: [0, 150],
           outputRange: ['transparent', '#fff'],
           extrapolate: 'clamp',
-        })
+        }),
       }]}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
           <Animated.Text style={[styles.backButtonText, { color: backButtonColor }]}>
@@ -133,8 +132,6 @@ export default function KentiScreen({ navigation }) {
               extrapolate: 'clamp',
             })
           }],
-          borderTopLeftRadius: 20,
-          borderTopRightRadius: 20,
           overflow: 'hidden',
           backgroundColor: '#fff',
         }}>
@@ -172,7 +169,7 @@ export default function KentiScreen({ navigation }) {
           </View>
         </Animated.View>
       </Animated.ScrollView>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -180,8 +177,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    paddingTop: StatusBar.currentHeight,
-
   },
   bannerContainer: {
     position: 'absolute',
@@ -193,26 +188,27 @@ const styles = StyleSheet.create({
   bannerImage: {
     width: '100%',
     height: height * 0.20,
-    resizeMode: 'cover',
+    resizeMode: 'contain',
+    backgroundColor: '#000',
   },
   scrollView: {
     marginTop: 0,
   },
   scrollViewContent: {
-    paddingTop: height * 0.35 + StatusBar.currentHeight,
+    paddingTop: height * 0.30,
     paddingHorizontal: 16,
   },
   fixedHeader: {
     position: 'absolute',
-    top: StatusBar.currentHeight + 20,
+    top: Platform.OS === 'ios' ? 30 : StatusBar.currentHeight, // Ajustar para iOS e Android
     left: 0,
     right: 0,
     height: 50,
-    zIndex: 2,
+    zIndex: 3, // Certifique-se de que o header tenha um zIndex maior que o fixedFilters
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#white',
+    backgroundColor: 'transparent',
   },
   backButton: {
     position: 'absolute',
@@ -228,10 +224,10 @@ const styles = StyleSheet.create({
   },
   fixedFilters: {
     position: 'absolute',
-    top: 10 + StatusBar.currentHeight,
+    top: Platform.OS === 'ios' ? 50 : StatusBar.currentHeight + 50, // Ajustar para iOS e Android
     left: 0,
     right: 0,
-    zIndex: 2,
+    zIndex: 2, // Certifique-se de que o zIndex seja menor que o fixedHeader
     paddingHorizontal: 16,
     paddingVertical: 10,
     borderBottomWidth: 1,
@@ -254,9 +250,6 @@ const styles = StyleSheet.create({
   filterText: {
     fontSize: 14,
     fontWeight: 'bold',
-  },
-  restaurantsContainer: {
-    marginTop: 10,
   },
   restaurantCard: {
     borderColor: '#e6e6e6',
