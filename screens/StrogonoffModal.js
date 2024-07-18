@@ -5,7 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 const { width, height } = Dimensions.get('window');
 
-const StrogonoffModal = ({ visible, onClose }) => {
+const StrogonoffModal = ({ visible, onClose, onAddToCart }) => {
     const [quantity, setQuantity] = useState(1);
     const [selectedItems, setSelectedItems] = useState([]);
     const translateY = useRef(new Animated.Value(height)).current;
@@ -39,6 +39,8 @@ const StrogonoffModal = ({ visible, onClose }) => {
         }
     };
 
+    
+
     const toggleSelection = (item) => {
         setSelectedItems((prev) =>
             prev.includes(item) ? prev.filter((i) => i !== item) : [...prev, item]
@@ -57,8 +59,10 @@ const StrogonoffModal = ({ visible, onClose }) => {
             useNativeDriver: true,
         }).start(() => {
             onClose();
+            onAddToCart();
         });
     };
+
 
     if (!visible) return null;
 

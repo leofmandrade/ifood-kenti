@@ -21,8 +21,16 @@ export default function CameloScreen({ navigation }) {
     
 
     const scrollY = useRef(new Animated.Value(0)).current;
+    const [showAddToCartBox, setShowAddToCartBox] = useState(false);
     const scrollViewRef = useRef(null);
     const [modalVisible, setModalVisible] = useState(false);
+
+    const handleAddToCart = () => {
+      setShowAddToCartBox(true);
+  };
+
+
+
     const sections = [
         { id: '1', name: 'Os mais pedidos' },
         { id: '2', name: 'Strogonoffs' },
@@ -382,7 +390,24 @@ export default function CameloScreen({ navigation }) {
 
                 </Animated.View>
             </Animated.ScrollView>
-            {modalVisible && <StrogonoffModal visible={modalVisible} onClose={() => setModalVisible(false)} />}
+            {modalVisible && <StrogonoffModal visible={modalVisible} onClose={() => setModalVisible(false)} onAddToCart={handleAddToCart} />}
+
+            {showAddToCartBox && (
+                <TouchableOpacity style={styles.addToCartBox} onPress={() => navigation.navigate('CarrinhoScreen')}>
+                    <View>
+                        <Text style={styles.totalText}>Total sem a entrega</Text>
+                        <Text style={styles.priceCarrinhoText}>R$224,00</Text>
+                    </View>
+
+
+
+                    {/* "Ver Sacola" red button with white text */}
+                    <TouchableOpacity style={styles.verSacolaButton}>
+                        <Text style={styles.verSacolaText}>Ver Sacola</Text>
+                      </TouchableOpacity>
+
+                </TouchableOpacity>
+            )}
             </SafeAreaView>
         );
     }
@@ -391,6 +416,46 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+  },
+  verSacolaButton: {
+    backgroundColor: '#E4002B',
+    paddingVertical: 15,
+    borderRadius: 8,
+    paddingHorizontal: 42,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  totalText: {
+    color: 'gray',
+    fontFamily: 'iFoodRCTextos-Regular',
+  },
+  addToCartBox: {
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
+    backgroundColor: 'white',
+    padding: 16,
+    paddingHorizontal: 20,
+    paddingBottom: 40,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexDirection: 'row',
+    // border just on top with a grey color and a shadow
+    borderTopWidth: 1,
+    borderTopColor: '#ddd',
+    shadowColor: '#000',
+    shadowOpacity: 0.3,
+
+  },
+  priceCarrinhoText: {
+      color: 'black',
+      fontSize: 20,
+      fontFamily: 'iFoodRCTextos-Bold',
+  },
+  verSacolaText: {
+      color: 'white',
+      fontSize: 16,
+      fontFamily: 'iFoodRCTextos-Regular',
   },
   bannerContainer: {
     position: 'absolute',
