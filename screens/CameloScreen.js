@@ -2,6 +2,7 @@ import React, { useRef, useState, useLayoutEffect } from 'react';
 import { Animated, ScrollView, View, Text, Image, StyleSheet, TouchableOpacity, StatusBar, Dimensions, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import StrogonoffModal from './StrogonoffModal';
+import CarrinhoScreen from './CarrinhoScreen'; // Importe o CarrinhoScreen
 const { width, height } = Dimensions.get('window');
 import { useFocusEffect } from '@react-navigation/native';
 
@@ -24,12 +25,20 @@ export default function CameloScreen({ navigation }) {
     const [showAddToCartBox, setShowAddToCartBox] = useState(false);
     const scrollViewRef = useRef(null);
     const [modalVisible, setModalVisible] = useState(false);
+    const [cartModalVisible, setCartModalVisible] = useState(false);
 
     const handleAddToCart = () => {
       setShowAddToCartBox(true);
-  };
+    };
 
 
+      const openCartModal = () => {
+        setCartModalVisible(true);
+    };
+
+    const closeCartModal = () => {
+        setCartModalVisible(false);
+    };
 
     const sections = [
         { id: '1', name: 'Os mais pedidos' },
@@ -40,6 +49,11 @@ export default function CameloScreen({ navigation }) {
         { id: '6', name: 'Acompanhamentos' },
         { id: '8', name: 'Bebidas' },
     ];
+
+    const navigateToCart = () => {
+      navigation.navigate('Carrinho');
+  };
+
     const strogonoffs = [
         { id: '1', name: 'Strogonoff de camarão', image: require('../assets/strogonoff.png'), descricao: 'Acompanha arroz branco e batata palha.', serve: 'Serve 2 pessoas', price: 'R$ 224,00'},
         { id: '2', name: 'Strogonoff de camarão - Meia porção', image: require('../assets/strogonoff.png'), descricao: 'Acompanha arroz branco e batata palha.', price: 'R$ 134,40' },
@@ -393,21 +407,19 @@ export default function CameloScreen({ navigation }) {
             {modalVisible && <StrogonoffModal visible={modalVisible} onClose={() => setModalVisible(false)} onAddToCart={handleAddToCart} />}
 
             {showAddToCartBox && (
-                <TouchableOpacity style={styles.addToCartBox} onPress={() => navigation.navigate('CarrinhoScreen')}>
+                  <TouchableOpacity style={styles.addToCartBox} onPress={openCartModal}>
                     <View>
                         <Text style={styles.totalText}>Total sem a entrega</Text>
                         <Text style={styles.priceCarrinhoText}>R$224,00</Text>
                     </View>
-
-
-
                     {/* "Ver Sacola" red button with white text */}
-                    <TouchableOpacity style={styles.verSacolaButton}>
+                    <TouchableOpacity style={styles.verSacolaButton} onPress={openCartModal}>
                         <Text style={styles.verSacolaText}>Ver Sacola</Text>
                       </TouchableOpacity>
 
                 </TouchableOpacity>
             )}
+            <CarrinhoScreen visible={cartModalVisible} onClose={closeCartModal} />
             </SafeAreaView>
         );
     }
