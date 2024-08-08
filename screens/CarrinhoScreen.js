@@ -6,8 +6,37 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 const { width, height } = Dimensions.get('window');
 
-const CarrinhoScreen = ({ visible, onClose }) => {
+const CarrinhoScreen = ({ visible, onClose, navigation }) => {
     const translateY = useRef(new Animated.Value(height)).current;
+
+    const chamaAPI = () => {
+        fetch('http://52.205.25.205/bag/1/status?status=1', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log('Success:', data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            }
+            );
+    };
+
+    const vaiproacompanha = () => {
+        Animated.timing(translateY, {
+            toValue: height,
+            duration: 500,
+            useNativeDriver: true,
+        }).start(() => {
+            onClose();
+            navigation.navigate('AcompanhaPedido');
+        });
+    };
+    
 
     useEffect(() => {
         if (visible) {
@@ -109,9 +138,14 @@ const CarrinhoScreen = ({ visible, onClose }) => {
                         <Text style={styles.priceCarrinhoText}>R$236,00</Text>
                     </View>
                     {/* "Ver Sacola" #E4002B button with white text */}
-                    <TouchableOpacity style={styles.verSacolaButton}>
+                    <TouchableOpacity style={styles.verSacolaButton} onPress={chamaAPI}>
                         <Text style={styles.verSacolaText}>Continuar</Text>
-                      </TouchableOpacity>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.verSacolaButton} onPress={vaiproacompanha}>
+                        <Text style={styles.verSacolaText}>PROXIMA PAGINA</Text>
+                    </TouchableOpacity>
+
 
                 </TouchableOpacity>
             </Animated.View>

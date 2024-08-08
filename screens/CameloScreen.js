@@ -419,7 +419,7 @@ export default function CameloScreen({ navigation }) {
 
                 </TouchableOpacity>
             )}
-            <CarrinhoScreen visible={cartModalVisible} onClose={closeCartModal} />
+            <CarrinhoScreen visible={cartModalVisible} onClose={closeCartModal} navigation={navigation} />
             </SafeAreaView>
         );
     }

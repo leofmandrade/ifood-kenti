@@ -20,8 +20,9 @@ import HomeIcon from './assets/homeicon.png';
 import SearchIcon from './assets/searchicon.png';
 import OrdersIcon from './assets/ordersicon.png';
 import ProfileIcon from './assets/profileicon.png';
+import CarrinhoScreen from './screens/CarrinhoScreen';
+import AcompanhaPedido from './screens/AcompanhaPedido';
 // import StrogonoffScreen from './screens/StrogonoffScreen';
-// import CarrinhoScreen from './screens/CarrinhoScreen';
 
 
 const Stack = createStackNavigator();
@@ -36,7 +37,8 @@ function HomeStack() {
       <Stack.Screen name="Kenti" component={KentiScreen} options={{ headerShown: false }} />
       <Stack.Screen name="Camelo" component={CameloScreen} options={{ headerShown: false }} />
       {/* <Stack.Screen name="Strogonoff" component={StrogonoffScreen} options={{ headerShown: false }} /> */}
-      {/* <Stack.Screen name="Carrinho" component={CarrinhoScreen} options={{ headerShown: false }} /> */}
+      <Stack.Screen name="Carrinho" component={CarrinhoScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="AcompanhaPedido" component={AcompanhaPedido} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 }
